@@ -1,6 +1,8 @@
 package networking;
 
 
+import java.util.HashMap;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Array;
@@ -20,20 +22,10 @@ import components.SpriteComponent;
 public class Kryos {
 	
 	public static void registerAll(Kryo kryo){
-		kryo.register(BodyComponent.class);
-		kryo.register(CoupledComponent.class);
-		kryo.register(LightComponent.class);
-		kryo.register(ParticleComponent.class);
-		kryo.register(PositionComponent.class);
-		kryo.register(SizeComponent.class);
-		kryo.register(SpeedComponent.class);
-		kryo.register(SpriteComponent.class);
-		kryo.register(RenderableComponent.class);
-		kryo.register(OutOfBoundsComponent.class);
+		kryo.register(Packet.class);
+		kryo.register(float[].class);
 		kryo.register(Object[].class);
-		kryo.register(Array.class);
-		kryo.register(Sprite.class);
-		kryo.register(Texture.class);
+		kryo.register(HashMap.class);
 		kryo.register(com.badlogic.gdx.graphics.Color.class);
 	}
 }

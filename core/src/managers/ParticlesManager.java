@@ -31,7 +31,6 @@ public class ParticlesManager implements EntityListener {
 		if (pools.containsKey(particle.gameParticle)) {
 			particle.effect = pools.get(particle.gameParticle).obtain();
 			particle.effect.setPosition(position.x, position.y);
-			System.out.println("Created pooled particle ..." + particle.effect);
 		}
 
 		else {
@@ -39,9 +38,7 @@ public class ParticlesManager implements EntityListener {
 					getParticlePrototype(particle.gameParticle), 1, 10));
 			particle.effect = pools.get(particle.gameParticle).obtain();
 			particle.effect.setPosition(position.x, position.y);
-			System.out.println("Created new particle ..." + particle.effect);
-			
-		//	activeEffects.add(particle.effect);
+
 		}
 		
 	}

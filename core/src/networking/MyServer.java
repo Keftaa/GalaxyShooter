@@ -44,22 +44,19 @@ public class MyServer {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void received(Connection connection, Object object) {
-				if(object instanceof Array){
-					Array<Component> components = (Array<Component>) object;
-					for(Component c: components){
-						if(c instanceof SpeedComponent){
-							SpeedComponent speed = (SpeedComponent) c;
-							speed.y = -speed.y;
-						}
-						
-					}
-						
-					server.sendToAllExceptTCP(connection.getID(), components);
-					
+				if(object instanceof Packet){
+					Packet packet = (Packet) object;
+					float [] speedInfo = (float[]) packet.stuff.get("Speed");
+					speedInfo[1] = -speedInfo[1];
+					packet.stuff.put("Speed", speedInfo);
+					server.sendToAllExceptUDP(connection.getID(), packet);
+					System.out.println("Server received and relayed a packet.");
 				}
 			}
 			
 		});
 	}
+	
+
 	
 }

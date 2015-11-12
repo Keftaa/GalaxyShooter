@@ -66,7 +66,7 @@ public class GameScreen implements Screen {
 		
 		bodyGenerator = new BodyGenerator(world);
 
-		entitiesManager = new EntitiesManager(main.engine, main.viewport, main.atlas);
+		entitiesManager = new EntitiesManager(main.engine, main.viewport);
 
 		lightsManager = new LightsManager(world, main.viewport);
 		
@@ -92,12 +92,11 @@ public class GameScreen implements Screen {
 
 		main.engine.addEntityListener(
 				Family.all(DispatchableComponent.class,
-						RenderableComponent.class).get(),
-				new NetworkDispatcher(new RenderableComponent(), main.client));
+						RenderableComponent.class).get(), -1,
+				new NetworkDispatcher(main.client));
 
 		main.engine.addEntityListener(Family.all(ParticleComponent.class).get(), new ParticlesManager());
-		
-		hud = new HUD(main.engine, main.atlas);
+		hud = new HUD(main.engine);
 		main.engine.addEntityListener(Family.all(ControllableComponent.class).get(), hud);
 		
 		//main.engine.addSystem(new ControllingSystem());
@@ -169,7 +168,6 @@ public class GameScreen implements Screen {
 	@Override
 	public void resize(int width, int height) {
 		main.viewport.update(width, height);
-		main.viewport.setScreenX(0);
 		hud.viewport.update(width, height);
 		lightsManager.handler.useCustomViewport(main.viewport.getScreenX(), main.viewport.getScreenY(), (int) main.viewport.getScreenWidth(), (int) main.viewport.getScreenHeight());
 			

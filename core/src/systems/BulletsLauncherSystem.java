@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Array;
 import components.BodyComponent;
 import components.ControllableComponent;
 import components.CoupledComponent;
+import components.DispatchableComponent;
 import components.RenderableComponent;
 import components.SpeedComponent;
 
@@ -45,12 +46,12 @@ public class BulletsLauncherSystem extends IntervalSystem {
 					.get(couple.coupleId);
 			for (Entity e : entities)
 				if (e.getId() == entity.getId()) {
-					System.out.println("Processed on " + entity);
 					entity.remove(CoupledComponent.class);
 					SpeedComponent speed = speedMapper.get(entity);
 					speed.active = true;
 					entity.add(new BodyComponent());
 					entity.add(new RenderableComponent());
+					entity.add(new DispatchableComponent());
 					return;
 				}
 	}

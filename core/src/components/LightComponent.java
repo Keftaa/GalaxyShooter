@@ -13,5 +13,5 @@ public class LightComponent implements Component {
 	public float x;
 	public float y;
 	public Color color;
-	public PointLight light;
+	public PointLight light; // auto generated
 }

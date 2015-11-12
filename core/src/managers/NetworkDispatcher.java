@@ -20,14 +20,12 @@ public class NetworkDispatcher implements EntityListener {
 			.getFor(DispatchableComponent.class);
 	/**
 	 * When an entity loses the component specified in the constructor,
-	 * we dispatch the entity's dispatchable components to the server.
+	 * we dispatch the entity's components to the server.
 	 * 
 	 * @params
-	 * component: the component that will trigger the dispatch<br>
 	 * client: the networking client
 	 */
-	public NetworkDispatcher(Component component, MyClient client) {
-		targetComponent = component;
+	public NetworkDispatcher(MyClient client) {
 		this.client = client;
 	}
 
@@ -38,11 +36,7 @@ public class NetworkDispatcher implements EntityListener {
 
 	@Override
 	public void entityRemoved(Entity entity) {
-		if (!entity.getComponents().contains(targetComponent, false)) {
-			DispatchableComponent dispatchable = dispatchableMapper.get(entity);
-			client.sendPacket(dispatchable.componentsToDispatch);
-		}
-
+		client.sendPacket(entity.getComponents());
 	}
 
 }

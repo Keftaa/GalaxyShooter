@@ -33,11 +33,10 @@ import components.SpriteComponent;
 public class EntitiesManager {
 	private Engine engine;
 	private FitViewport viewport;
-	private TextureAtlas atlas;
-	public EntitiesManager(Engine engine, FitViewport viewport, TextureAtlas atlas) {
+
+	public EntitiesManager(Engine engine, FitViewport viewport) {
 		this.engine = engine;
 		this.viewport = viewport;
-		this.atlas = atlas;
 	}
 
 	public void addBullets(int count) {
@@ -53,10 +52,10 @@ public class EntitiesManager {
 			ParticleComponent particle = new ParticleComponent();
 
 			size.width = 0.4f;
-			size.height = 0.4f;
+			size.height = 1f;
 			speed.x = 0;
 			speed.y = 20;
-			sprite.sprite = atlas.createSprite("bulletGreen");
+			sprite.sprite = Assets.GameSprite.GreenLaser.getSprite();
 			sprite.afterLight = true;
 			coupled.coupleId = 0;
 			coupled.offsetX = 0f;
@@ -105,9 +104,9 @@ public class EntitiesManager {
 		size.height = 4.01f;
 		speed.x = 100;
 		speed.y = 0;
-		sprite.sprite = atlas.createSprite("player");
+		sprite.sprite = Assets.GameSprite.GreenShip.getSprite();
 		sprite.afterLight = true;
-		damageSprite.damageSprite = atlas.createSprite("playerShip2_damage2");
+		damageSprite.damageSprite = Assets.GameSprite.Damage2.getSprite();
 		coupled.coupleId = 0;
 		coupled.leader = true;
 		relativeSpeed.leader = true;
@@ -155,7 +154,7 @@ public class EntitiesManager {
 		bSize.height = viewport.getWorldHeight();
 		RenderableComponent bRenderable = new RenderableComponent();
 		SpriteComponent bSprite = new SpriteComponent();
-		bSprite.sprite = atlas.createSprite("background");
+		bSprite.sprite = Assets.GameSprite.Background.getSprite();
 
 		background.add(bSize);
 		background.add(bPosition);
@@ -168,7 +167,8 @@ public class EntitiesManager {
 			Entity star = new Entity();
 			star.add(new RenderableComponent());
 			SpriteComponent sprite = new SpriteComponent();
-			sprite.sprite = atlas.createSprite("star");
+			sprite.sprite =  Assets.GameSprite.Star.getSprite();
+			
 			sprite.afterLight = true;
 			SizeComponent size = new SizeComponent();
 			size.width = MathUtils.random(0.5f, 1);
@@ -214,7 +214,7 @@ public class EntitiesManager {
 			Entity star = new Entity();
 			star.add(new RenderableComponent());
 			SpriteComponent sprite = new SpriteComponent();
-			sprite.sprite = atlas.createSprite("star");
+			sprite.sprite =  Assets.GameSprite.Star.getSprite();
 			sprite.afterLight = true;
 			SizeComponent size = new SizeComponent();
 			size.width = MathUtils.random(0.5f, 1);

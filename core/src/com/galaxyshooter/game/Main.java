@@ -24,10 +24,9 @@ public class Main extends Game {
 	
 	@Override
 	public void create() {
-		atlas = new TextureAtlas(Gdx.files.internal("game.pack"));
 		engine = new Engine();
-	//	server = new MyServer(engine); server.serverListener();
-	//	client = new MyClient(engine);
+		server = new MyServer(engine); server.serverListener();
+		client = new MyClient(engine);
 		
 		batch = new SpriteBatch();
 		viewport = new FitViewport(800/8, 480/8);

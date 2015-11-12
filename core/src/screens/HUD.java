@@ -22,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.galaxyshooter.game.Assets;
 
 import components.SpeedComponent;
 
@@ -39,10 +40,9 @@ public class HUD implements EntityListener {
 	private Table root;
 	private Image life1, life2, life3, life4, upArrow, downArrow, leftArrow,
 			rightArrow, shootButton;
+
 	
-	private TextureAtlas atlas;
-	HUD(Engine engine, TextureAtlas atlas) {
-		this.atlas = atlas;
+	HUD(Engine engine) {
 		viewport = new FitViewport(800, 480);
 		this.engine = engine;
 
@@ -54,10 +54,10 @@ public class HUD implements EntityListener {
 
 		root.debug();
 		lives = new HorizontalGroup();
-		life1 = new Image(atlas.findRegion("playerLives"));
-		life2 = new Image(atlas.findRegion("playerLives"));
-		life3 = new Image(atlas.findRegion("playerLives"));
-		life4 = new Image(atlas.findRegion("playerLives"));
+		life1 = new Image(Assets.GameSprite.GreenShipLives.getSprite());
+		life2 = new Image(Assets.GameSprite.GreenShipLives.getSprite());
+		life3 = new Image(Assets.GameSprite.GreenShipLives.getSprite());
+		life4 = new Image(Assets.GameSprite.GreenShipLives.getSprite());
 		life1.setPosition(0, 0);
 		life2.setPosition(life1.getWidth(), 0);
 		life3.setPosition(life1.getWidth() * 2, 0);
@@ -69,11 +69,11 @@ public class HUD implements EntityListener {
 
 		arrows = new Group();
 		arrows.setBounds(0, 0, 250, 150);
-		upArrow = new Image(atlas.findRegion("up"));
-		downArrow = new Image(atlas.findRegion("down"));
-		rightArrow = new Image(atlas.findRegion("right"));
-		leftArrow = new Image(atlas.findRegion("left"));
-		shootButton = new Image(atlas.findRegion("shoot"));
+		upArrow = new Image(Assets.GameSprite.Up.getSprite());
+		downArrow = new Image(Assets.GameSprite.Down.getSprite());
+		rightArrow = new Image(Assets.GameSprite.Right.getSprite());
+		leftArrow = new Image(Assets.GameSprite.Left.getSprite());
+		shootButton = new Image(Assets.GameSprite.Shoot.getSprite());
 
 		upArrow.setBounds(arrows.getWidth() / 3,
 				arrows.getHeight() - arrows.getHeight() / 2,
