@@ -1,0 +1,376 @@
+
+game.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+nebula
+  rotate: false
+  xy: 1, 335
+  size: 241, 168
+  orig: 241, 168
+  offset: 0, 0
+  index: -1
+meteorGrey_big2
+  rotate: false
+  xy: 1, 235
+  size: 120, 98
+  orig: 120, 98
+  offset: 0, 0
+  index: -1
+meteorBrown_big2
+  rotate: false
+  xy: 244, 405
+  size: 120, 98
+  orig: 120, 98
+  offset: 0, 0
+  index: -1
+meteorBrown_big4
+  rotate: false
+  xy: 1, 137
+  size: 98, 96
+  orig: 98, 96
+  offset: 0, 0
+  index: -1
+meteorGrey_big4
+  rotate: false
+  xy: 123, 237
+  size: 98, 96
+  orig: 98, 96
+  offset: 0, 0
+  index: -1
+playerShip2_damage3
+  rotate: false
+  xy: 366, 427
+  size: 112, 76
+  orig: 112, 76
+  offset: 0, 0
+  index: -1
+playerShip2_damage2
+  rotate: false
+  xy: 480, 427
+  size: 112, 76
+  orig: 112, 76
+  offset: 0, 0
+  index: -1
+playerShip2_damage1
+  rotate: false
+  xy: 594, 427
+  size: 111, 76
+  orig: 111, 76
+  offset: 0, 0
+  index: -1
+player
+  rotate: false
+  xy: 707, 428
+  size: 112, 75
+  orig: 112, 75
+  offset: 0, 0
+  index: -1
+meteorBrown_big1
+  rotate: false
+  xy: 1, 51
+  size: 101, 84
+  orig: 101, 84
+  offset: 0, 0
+  index: -1
+meteorGrey_big1
+  rotate: false
+  xy: 821, 419
+  size: 101, 84
+  orig: 101, 84
+  offset: 0, 0
+  index: -1
+playerShip1_damage2
+  rotate: false
+  xy: 924, 427
+  size: 99, 76
+  orig: 99, 76
+  offset: 0, 0
+  index: -1
+playerShip1_damage1
+  rotate: false
+  xy: 924, 349
+  size: 99, 76
+  orig: 99, 76
+  offset: 0, 0
+  index: -1
+playerShip1_damage3
+  rotate: false
+  xy: 244, 327
+  size: 100, 76
+  orig: 100, 76
+  offset: 0, 0
+  index: -1
+ufoGreen
+  rotate: false
+  xy: 223, 234
+  size: 91, 91
+  orig: 91, 91
+  offset: 0, 0
+  index: -1
+ufoBlue
+  rotate: false
+  xy: 316, 234
+  size: 91, 91
+  orig: 91, 91
+  offset: 0, 0
+  index: -1
+playerShip3_damage1
+  rotate: false
+  xy: 346, 327
+  size: 97, 76
+  orig: 97, 76
+  offset: 0, 0
+  index: -1
+ufoRed
+  rotate: false
+  xy: 445, 334
+  size: 91, 91
+  orig: 91, 91
+  offset: 0, 0
+  index: -1
+ufoYellow
+  rotate: false
+  xy: 538, 334
+  size: 91, 91
+  orig: 91, 91
+  offset: 0, 0
+  index: -1
+meteorBrown_big3
+  rotate: false
+  xy: 631, 343
+  size: 89, 82
+  orig: 89, 82
+  offset: 0, 0
+  index: -1
+playerShip3_damage3
+  rotate: false
+  xy: 722, 350
+  size: 97, 76
+  orig: 97, 76
+  offset: 0, 0
+  index: -1
+playerShip1_orange
+  rotate: false
+  xy: 821, 342
+  size: 99, 75
+  orig: 99, 75
+  offset: 0, 0
+  index: -1
+meteorGrey_big3
+  rotate: false
+  xy: 409, 243
+  size: 89, 82
+  orig: 89, 82
+  offset: 0, 0
+  index: -1
+playerShip3_blue
+  rotate: false
+  xy: 500, 257
+  size: 98, 75
+  orig: 98, 75
+  offset: 0, 0
+  index: -1
+playerShip3_damage2
+  rotate: false
+  xy: 722, 272
+  size: 97, 76
+  orig: 97, 76
+  offset: 0, 0
+  index: -1
+shoot
+  rotate: false
+  xy: 821, 260
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+down
+  rotate: false
+  xy: 600, 257
+  size: 61, 75
+  orig: 61, 75
+  offset: 0, 0
+  index: -1
+lineDark13
+  rotate: false
+  xy: 1, 1
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+lineDark09
+  rotate: false
+  xy: 51, 1
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+up
+  rotate: false
+  xy: 101, 157
+  size: 61, 76
+  orig: 61, 76
+  offset: 0, 0
+  index: -1
+right
+  rotate: false
+  xy: 104, 94
+  size: 76, 61
+  orig: 76, 61
+  offset: 0, 0
+  index: -1
+left
+  rotate: false
+  xy: 104, 31
+  size: 75, 61
+  orig: 75, 61
+  offset: 0, 0
+  index: -1
+lineDark26
+  rotate: false
+  xy: 164, 187
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+meteorBrown_med1
+  rotate: false
+  xy: 663, 298
+  size: 43, 43
+  orig: 43, 43
+  offset: 0, 0
+  index: -1
+meteorBrown_med3
+  rotate: false
+  xy: 663, 256
+  size: 45, 40
+  orig: 45, 40
+  offset: 0, 0
+  index: -1
+meteorGrey_med1
+  rotate: false
+  xy: 214, 189
+  size: 43, 43
+  orig: 43, 43
+  offset: 0, 0
+  index: -1
+meteorGrey_med2
+  rotate: false
+  xy: 259, 192
+  size: 45, 40
+  orig: 45, 40
+  offset: 0, 0
+  index: -1
+meteorGrey_small1
+  rotate: false
+  xy: 164, 157
+  size: 28, 28
+  orig: 28, 28
+  offset: 0, 0
+  index: -1
+powerupGreen_bolt
+  rotate: false
+  xy: 306, 199
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+playerLives
+  rotate: false
+  xy: 342, 206
+  size: 37, 26
+  orig: 37, 26
+  offset: 0, 0
+  index: -1
+playerLife1_orange
+  rotate: false
+  xy: 101, 3
+  size: 33, 26
+  orig: 33, 26
+  offset: 0, 0
+  index: -1
+playerLife3_blue
+  rotate: false
+  xy: 136, 3
+  size: 32, 26
+  orig: 32, 26
+  offset: 0, 0
+  index: -1
+meteorBrown_small2
+  rotate: false
+  xy: 381, 206
+  size: 29, 26
+  orig: 29, 26
+  offset: 0, 0
+  index: -1
+meteorBrown_small1
+  rotate: false
+  xy: 412, 213
+  size: 28, 28
+  orig: 28, 28
+  offset: 0, 0
+  index: -1
+meteorGrey_small2
+  rotate: false
+  xy: 442, 215
+  size: 29, 26
+  orig: 29, 26
+  offset: 0, 0
+  index: -1
+bulletRed
+  rotate: false
+  xy: 903, 303
+  size: 9, 37
+  orig: 9, 37
+  offset: 0, 0
+  index: -1
+bulletGreen
+  rotate: false
+  xy: 708, 304
+  size: 9, 37
+  orig: 9, 37
+  offset: 0, 0
+  index: -1
+meteorBrown_tiny1
+  rotate: false
+  xy: 366, 407
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+meteorGrey_tiny1
+  rotate: false
+  xy: 194, 167
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+meteorGrey_tiny2
+  rotate: false
+  xy: 214, 172
+  size: 16, 15
+  orig: 16, 15
+  offset: 0, 0
+  index: -1
+meteorBrown_tiny2
+  rotate: false
+  xy: 473, 226
+  size: 16, 15
+  orig: 16, 15
+  offset: 0, 0
+  index: -1
+star
+  rotate: false
+  xy: 500, 244
+  size: 11, 11
+  orig: 11, 11
+  offset: 0, 0
+  index: -1
+background
+  rotate: false
+  xy: 101, 154
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1

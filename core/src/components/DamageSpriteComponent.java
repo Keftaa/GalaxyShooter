@@ -1,0 +1,8 @@
+package components;
+
+import com.badlogic.ashley.core.Component;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
+public class DamageSpriteComponent implements Component {
+	public Sprite damageSprite;
+}
