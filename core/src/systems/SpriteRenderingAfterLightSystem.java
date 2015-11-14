@@ -18,8 +18,8 @@ public class SpriteRenderingAfterLightSystem extends IteratingSystem {
 			.getFor(PositionComponent.class);
 	private ComponentMapper<SpriteComponent> spriteMapper = ComponentMapper
 			.getFor(SpriteComponent.class);
-	private ComponentMapper<DamageSpriteComponent> damageSpriteMapper = ComponentMapper
-			.getFor(DamageSpriteComponent.class);
+//	private ComponentMapper<DamageSpriteComponent> damageSpriteMapper = ComponentMapper
+//			.getFor(DamageSpriteComponent.class);
 
 	private SpriteBatch batch;
 
@@ -34,17 +34,17 @@ public class SpriteRenderingAfterLightSystem extends IteratingSystem {
 	protected void processEntity(Entity entity, float deltaTime) {
 		PositionComponent position = positionMapper.get(entity);
 		SpriteComponent sprite = spriteMapper.get(entity);
-		DamageSpriteComponent damageSprite = damageSpriteMapper.get(entity);
+//		DamageSpriteComponent damageSprite = damageSpriteMapper.get(entity);
 		if(sprite.afterLight){
 			sprite.sprite.setPosition(position.x - sprite.sprite.getWidth()/2,
 					position.y - sprite.sprite.getHeight()/2);
 			sprite.sprite.draw(batch);
-			if(damageSprite != null){
-				damageSprite.damageSprite.setPosition(
-						position.x - sprite.sprite.getWidth() / 2, position.y
-								- sprite.sprite.getHeight() / 2);			
-				damageSprite.damageSprite.draw(batch);			
-			}
+//			if(damageSprite != null){
+//				damageSprite.damageSprite.setPosition(
+//						position.x - sprite.sprite.getWidth() / 2, position.y
+//								- sprite.sprite.getHeight() / 2);			
+//				damageSprite.damageSprite.draw(batch);			
+//			}
 
 		}
 			

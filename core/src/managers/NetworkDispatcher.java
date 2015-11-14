@@ -10,21 +10,11 @@ import com.badlogic.ashley.core.EntityListener;
 import components.DispatchableComponent;
 
 public class NetworkDispatcher implements EntityListener {
-	// When an entity loses the component specified in the constructor,
-	// we dispatch this to the appropriate server
 
-	private Component targetComponent;
+	
+
 	private MyClient client;
 
-	private ComponentMapper<DispatchableComponent> dispatchableMapper = ComponentMapper
-			.getFor(DispatchableComponent.class);
-	/**
-	 * When an entity loses the component specified in the constructor,
-	 * we dispatch the entity's components to the server.
-	 * 
-	 * @params
-	 * client: the networking client
-	 */
 	public NetworkDispatcher(MyClient client) {
 		this.client = client;
 	}
@@ -37,6 +27,7 @@ public class NetworkDispatcher implements EntityListener {
 	@Override
 	public void entityRemoved(Entity entity) {
 		client.sendPacket(entity.getComponents());
+		System.out.println(entity.getComponents());
 	}
 
 }

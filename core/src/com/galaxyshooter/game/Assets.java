@@ -13,9 +13,11 @@ public class Assets {
 	
 	public enum GameSprite {
 		GreenShip("player"), RedLaser("bulletRed"), GreenLaser("bulletGreen"),
+		Damage1("playerShip2_damage1"), Damage3("playerShip2_damage3"),
+		Damage4("playerShip2_damage4"),
 		Damage2("playerShip2_damage2"), Background("background"), Star("star"),
-		GreenShipLives("playerLives"), Up("up"), Down("down"), Left("left"),
-		Right("right"), Shoot("shoot");
+		GreenShipLives("playerLives"), Up("up"), Down("down"), Left("right"),
+		Right("left"), Shoot("shoot");
 		
 		private Sprite sprite;
 		GameSprite(String atlasRef){

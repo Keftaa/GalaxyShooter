@@ -9,8 +9,7 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -19,11 +18,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.galaxyshooter.game.Assets;
 
+import components.EngineCapacityComponent;
 import components.SpeedComponent;
 
 public class HUD implements EntityListener {
@@ -33,15 +35,16 @@ public class HUD implements EntityListener {
 	private ComponentMapper<SpeedComponent> speedMapper = ComponentMapper
 			.getFor(SpeedComponent.class);
 
-
 	Engine engine;
 	private HorizontalGroup lives;
 	private Group arrows;
 	private Table root;
 	private Image life1, life2, life3, life4, upArrow, downArrow, leftArrow,
 			rightArrow, shootButton;
-
 	
+	private float shotEngineCounter, maxTime;
+	private boolean shootButtonPressed;
+
 	HUD(Engine engine) {
 		viewport = new FitViewport(800, 480);
 		this.engine = engine;
@@ -73,19 +76,20 @@ public class HUD implements EntityListener {
 		downArrow = new Image(Assets.GameSprite.Down.getSprite());
 		rightArrow = new Image(Assets.GameSprite.Right.getSprite());
 		leftArrow = new Image(Assets.GameSprite.Left.getSprite());
-		shootButton = new Image(Assets.GameSprite.Shoot.getSprite());
+		shootButton = new Image(new SpriteDrawable(Assets.GameSprite.Shoot.getSprite()));
 
 		upArrow.setBounds(arrows.getWidth() / 3,
 				arrows.getHeight() - arrows.getHeight() / 2,
-				upArrow.getWidth() / 2, arrows.getHeight() / 2);
-		// maybe create enums with the textures ? :\
-		downArrow.setBounds(arrows.getWidth() / 3, 0, downArrow.getWidth() / 2,
+				upArrow.getWidth(), arrows.getHeight() / 2);
+
+		downArrow.setBounds(arrows.getWidth() / 3, 0, downArrow.getWidth(),
 				arrows.getHeight() / 2);
 
 		leftArrow.setBounds(0, 0, arrows.getWidth() / 3, arrows.getHeight());
 
 		rightArrow.setBounds(arrows.getWidth() - arrows.getWidth() / 3, 0,
 				arrows.getWidth() / 3, arrows.getHeight());
+		
 		arrows.addActor(upArrow);
 		arrows.addActor(downArrow);
 		arrows.addActor(leftArrow);
@@ -105,17 +109,37 @@ public class HUD implements EntityListener {
 
 		entityActor = new HashMap<Entity, Actor>();
 		Gdx.input.setInputProcessor(stage);
+		
+		shotEngineCounter = 0;
+		shootButtonPressed = false;
 
 	}
 
 	public void render() {
 		stage.draw();
 		stage.act();
+		
+		
+		
+		if(shootButtonPressed){
+			shotEngineCounter+=Gdx.graphics.getDeltaTime();
+		}
+		else if(shotEngineCounter>0){
+			shotEngineCounter -= Gdx.graphics.getDeltaTime();
+		}
+		
+		if(shotEngineCounter>maxTime){
+			engine.getSystem(BulletsLauncherSystem.class).setProcessing(false);
+			System.out.println("Overheat");
+		}
+		
+		colorizeShotButton();
 	}
 
 	@Override
 	public void entityAdded(Entity entity) {
 		entityActor.put(entity, arrows);
+		maxTime= entity.getComponent(EngineCapacityComponent.class).maxTime;
 		final SpeedComponent speed = speedMapper.get(entity);
 		upArrow.addCaptureListener(new ClickListener() {
 
@@ -200,32 +224,48 @@ public class HUD implements EntityListener {
 			}
 
 		});
-		
-		
-		shootButton.addCaptureListener(new ClickListener(){
+
+		shootButton.addCaptureListener(new ClickListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-				
-				engine.getSystem(BulletsLauncherSystem.class).setProcessing(true);
+
+				engine.getSystem(BulletsLauncherSystem.class).setProcessing(
+						true);
+				shootButtonPressed = true;
 				return true;
-			}	
+			}
 			
 			
+
 			@Override
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
-				engine.getSystem(BulletsLauncherSystem.class).setProcessing(false);
-			}		
-			
-		});
+				engine.getSystem(BulletsLauncherSystem.class).setProcessing(
+						false);
+				shootButtonPressed = false;
+			}
 
+		});
 
 	}
 
 	@Override
 	public void entityRemoved(Entity entity) {
-		// TODO Auto-generated method stub
+		
+	}
+	
+	private void colorizeShotButton(){
+		
+		shootButton.setColor(shotEngineCounter, maxTime-shotEngineCounter, 0, 1);
+//		if(maxTime-shotEngineCounter<=0)
+//			shootButton.setColor(Color.RED);
+//		else if(maxTime-shotEngineCounter<=maxTime/4f)
+//			shootButton.setColor(Color.ROYAL);
+//		else if(maxTime-shotEngineCounter<=maxTime/3f)
+//			shootButton.setColor(Color.ORANGE);
+//		else if(maxTime-shotEngineCounter<=maxTime/2f)
+//			shootButton.setColor(Color.GREEN);
 
 	}
 

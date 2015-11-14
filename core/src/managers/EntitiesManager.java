@@ -1,23 +1,23 @@
 package managers;
 
-import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.Gdx;
+import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.galaxyshooter.game.Assets;
 
 import components.BodyComponent;
+import components.BulletRateComponent;
+import components.ContactDamageComponent;
 import components.ControllableComponent;
 import components.CoupledComponent;
 import components.DamageSpriteComponent;
 import components.DispatchableComponent;
+import components.EngineCapacityComponent;
 import components.FPSDepComponent;
+import components.HealthComponent;
 import components.LightComponent;
 import components.OutOfBoundsComponent;
 import components.OutOfBoundsComponent.AdequateAction;
@@ -31,25 +31,27 @@ import components.SpeedComponent;
 import components.SpriteComponent;
 
 public class EntitiesManager {
-	private Engine engine;
+	private PooledEngine engine;
 	private FitViewport viewport;
 
-	public EntitiesManager(Engine engine, FitViewport viewport) {
+	public EntitiesManager(PooledEngine engine, FitViewport viewport) {
 		this.engine = engine;
 		this.viewport = viewport;
 	}
 
-	public void addBullets(int count) {
-		for (int i = 0; i < count; i++) {
-			Entity bullet = new Entity();
+	public Entity createBullet() {
+			Entity bullet = engine.createEntity();
 
-			PositionComponent position = new PositionComponent();
-			SizeComponent size = new SizeComponent();
-			SpeedComponent speed = new SpeedComponent();
-			SpriteComponent sprite = new SpriteComponent();
-			CoupledComponent coupled = new CoupledComponent();
-			DispatchableComponent dispatchable = new DispatchableComponent();
-			ParticleComponent particle = new ParticleComponent();
+			PositionComponent position = engine.createComponent(PositionComponent.class);
+			SizeComponent size = engine.createComponent(SizeComponent.class);
+			SpeedComponent speed = engine.createComponent(SpeedComponent.class);
+			SpriteComponent sprite = engine.createComponent(SpriteComponent.class);
+			CoupledComponent coupled = engine.createComponent(CoupledComponent.class);
+			DispatchableComponent dispatchable = engine.createComponent(DispatchableComponent.class);
+			ParticleComponent particle = engine.createComponent(ParticleComponent.class);
+			OutOfBoundsComponent outOfBounds = engine.createComponent(OutOfBoundsComponent.class);
+			BulletRateComponent bulletRate = engine.createComponent(BulletRateComponent.class);
+			ContactDamageComponent damage = engine.createComponent(ContactDamageComponent.class);
 
 			size.width = 0.4f;
 			size.height = 1f;
@@ -61,41 +63,48 @@ public class EntitiesManager {
 			coupled.offsetX = 0f;
 			coupled.offsetY = 10f;
 			coupled.leader = false;
-			dispatchable.componentsToDispatch.add(position);
-			dispatchable.componentsToDispatch.add(speed);
-			dispatchable.componentsToDispatch.add(sprite);
-			dispatchable.componentsToDispatch.add(particle);
-			dispatchable.componentsToDispatch.add(size);
 			particle.gameParticle = GameParticle.BulletThrustParticle;
-
+			outOfBounds.action = AdequateAction.DISPOSE;
+			bulletRate.bulletsPerSecond = 3f;
+			damage.damagePoints = 5;
+			
+			bullet.add(coupled);
 			bullet.add(position);
 			bullet.add(size);
 			bullet.add(speed);
 			bullet.add(sprite);
-			bullet.add(coupled);
 			bullet.add(dispatchable);
 			bullet.add(particle);
+			bullet.add(outOfBounds);
+			bullet.add(bulletRate);
+			bullet.add(damage);
 			// Bullet's body auto-generated at launch.
+			
+			return bullet;
 
-			engine.addEntity(bullet);
-		}
-
+	}
+	
+	public void initBullet(){
+		Entity bullet = createBullet();
+		engine.addEntity(bullet);
 	}
 
 	public void addPlayer() {
-		Entity player = new Entity();
-		RenderableComponent renderable = new RenderableComponent();
-		PositionComponent position = new PositionComponent();
-		SizeComponent size = new SizeComponent();
-		SpeedComponent speed = new SpeedComponent();
-		SpriteComponent sprite = new SpriteComponent();
-		BodyComponent body = new BodyComponent();
-		ControllableComponent controllable = new ControllableComponent();
-		DamageSpriteComponent damageSprite = new DamageSpriteComponent();
-		CoupledComponent coupled = new CoupledComponent();
-		RelativeSpeedComponent relativeSpeed = new RelativeSpeedComponent();
-		OutOfBoundsComponent outOfBounds = new OutOfBoundsComponent();
-		ParticleComponent particle = new ParticleComponent();
+		Entity player = engine.createEntity();
+		RenderableComponent renderable = engine.createComponent(RenderableComponent.class);
+		PositionComponent position = engine.createComponent(PositionComponent.class);
+		SizeComponent size = engine.createComponent(SizeComponent.class);
+		SpeedComponent speed = engine.createComponent(SpeedComponent.class);
+		SpriteComponent sprite = engine.createComponent(SpriteComponent.class);
+		BodyComponent body = engine.createComponent(BodyComponent.class);
+		ControllableComponent controllable = engine.createComponent(ControllableComponent.class);
+		DamageSpriteComponent damageSprite = engine.createComponent(DamageSpriteComponent.class);
+		CoupledComponent coupled = engine.createComponent(CoupledComponent.class);
+		RelativeSpeedComponent relativeSpeed = engine.createComponent(RelativeSpeedComponent.class);
+		OutOfBoundsComponent outOfBounds = engine.createComponent(OutOfBoundsComponent.class);
+		ParticleComponent particle = engine.createComponent(ParticleComponent.class);
+		EngineCapacityComponent engineCapacity = engine.createComponent(EngineCapacityComponent.class);
+		HealthComponent health = engine.createComponent(HealthComponent.class);
 
 		position.x = 10;
 		position.y = 5;
@@ -106,7 +115,6 @@ public class EntitiesManager {
 		speed.y = 0;
 		sprite.sprite = Assets.GameSprite.GreenShip.getSprite();
 		sprite.afterLight = true;
-		damageSprite.damageSprite = Assets.GameSprite.Damage2.getSprite();
 		coupled.coupleId = 0;
 		coupled.leader = true;
 		relativeSpeed.leader = true;
@@ -129,6 +137,9 @@ public class EntitiesManager {
 		
 		outOfBounds.action = AdequateAction.ALERT;
 		particle.gameParticle = GameParticle.ThrustParticle;
+		engineCapacity.maxTime = 10;
+		health.hp = 100;
+		
 		player.add(renderable);
 		player.add(position);
 		player.add(size);
@@ -141,19 +152,21 @@ public class EntitiesManager {
 		player.add(outOfBounds);
 		player.add(damageSprite);
 		player.add(particle);
+		player.add(engineCapacity);
+		player.add(health);
 		engine.addEntity(player);
 	}
 
 	public void addBackgroundWithStars(int starCount) {
-		Entity background = new Entity();
-		PositionComponent bPosition = new PositionComponent();
+		Entity background = engine.createEntity();
+		PositionComponent bPosition = engine.createComponent(PositionComponent.class);
 		bPosition.x = viewport.getWorldWidth()/2;
 		bPosition.y =  viewport.getWorldHeight()/2;
-		SizeComponent bSize = new SizeComponent();
+		SizeComponent bSize = engine.createComponent(SizeComponent.class);
 		bSize.width = viewport.getWorldWidth();
 		bSize.height = viewport.getWorldHeight();
-		RenderableComponent bRenderable = new RenderableComponent();
-		SpriteComponent bSprite = new SpriteComponent();
+		RenderableComponent bRenderable = engine.createComponent(RenderableComponent.class);
+		SpriteComponent bSprite = engine.createComponent(SpriteComponent.class);
 		bSprite.sprite = Assets.GameSprite.Background.getSprite();
 
 		background.add(bSize);
@@ -164,36 +177,36 @@ public class EntitiesManager {
 		engine.addEntity(background);
 
 		for (int i = 0; i < starCount; i++) {
-			Entity star = new Entity();
+			Entity star = engine.createEntity();
 			star.add(new RenderableComponent());
-			SpriteComponent sprite = new SpriteComponent();
+			SpriteComponent sprite = engine.createComponent(SpriteComponent.class);
 			sprite.sprite =  Assets.GameSprite.Star.getSprite();
 			
 			sprite.afterLight = true;
-			SizeComponent size = new SizeComponent();
+			SizeComponent size = engine.createComponent(SizeComponent.class);
 			size.width = MathUtils.random(0.5f, 1);
 			size.height = MathUtils.random(0.5f, 1);
-			PositionComponent position = new PositionComponent();
+			PositionComponent position = engine.createComponent(PositionComponent.class);
 			position.x = MathUtils.random(-viewport.getWorldWidth() / 2,
 					viewport.getWorldWidth() / 2);
 			position.y = MathUtils.random(-viewport.getWorldHeight() / 2,
 					viewport.getWorldHeight() / 2);
-			SpeedComponent speed = new SpeedComponent();
+			SpeedComponent speed = engine.createComponent(SpeedComponent.class);
 			speed.x = 100;
 			speed.y = -30;
 			speed.active = true;
 			speed.zDistance = 10;
-			RelativeSpeedComponent relativeSpeed = new RelativeSpeedComponent();
+			RelativeSpeedComponent relativeSpeed = engine.createComponent(RelativeSpeedComponent.class);
 			relativeSpeed.groupId = 0;
-			OutOfBoundsComponent outOfBounds = new OutOfBoundsComponent();
+			OutOfBoundsComponent outOfBounds = engine.createComponent(OutOfBoundsComponent.class);
 			outOfBounds.action = AdequateAction.RESPAWN;
-			LightComponent light = new LightComponent();
+			LightComponent light = engine.createComponent(LightComponent.class);
 			light.color = Color.WHITE;
 			light.distance = 3.9f;
 			light.rays = 5;
 			light.x = position.x;
 			light.y = position.y;
-			FPSDepComponent fpsDep = new FPSDepComponent();
+			FPSDepComponent fpsDep = engine.createComponent(FPSDepComponent.class);
 			star.add(relativeSpeed);
 			star.add(size);
 			star.add(sprite);
@@ -211,35 +224,35 @@ public class EntitiesManager {
 
 	public void addMoreStars(int starCount) {
 		for (int i = 0; i < starCount; i++) {
-			Entity star = new Entity();
+			Entity star = engine.createEntity();
 			star.add(new RenderableComponent());
-			SpriteComponent sprite = new SpriteComponent();
+			SpriteComponent sprite = engine.createComponent(SpriteComponent.class);
 			sprite.sprite =  Assets.GameSprite.Star.getSprite();
 			sprite.afterLight = true;
-			SizeComponent size = new SizeComponent();
+			SizeComponent size = engine.createComponent(SizeComponent.class);
 			size.width = MathUtils.random(0.5f, 1);
 			size.height = MathUtils.random(0.5f, 1);
-			PositionComponent position = new PositionComponent();
+			PositionComponent position = engine.createComponent(PositionComponent.class);
 			position.x = MathUtils.random(-viewport.getWorldWidth() / 2,
 					viewport.getWorldWidth() / 2);
 			position.y = MathUtils.random(-viewport.getWorldHeight() / 2,
 					viewport.getWorldHeight() / 2);
-			SpeedComponent speed = new SpeedComponent();
+			SpeedComponent speed = engine.createComponent(SpeedComponent.class);
 			speed.x = 100;
 			speed.y = -30;
 			speed.active = true;
 			speed.zDistance = 10;
-			RelativeSpeedComponent relativeSpeed = new RelativeSpeedComponent();
+			RelativeSpeedComponent relativeSpeed = engine.createComponent(RelativeSpeedComponent.class);
 			relativeSpeed.groupId = 0;
-			OutOfBoundsComponent outOfBounds = new OutOfBoundsComponent();
+			OutOfBoundsComponent outOfBounds = engine.createComponent(OutOfBoundsComponent.class);
 			outOfBounds.action = AdequateAction.RESPAWN;
-			LightComponent light = new LightComponent();
+			LightComponent light = engine.createComponent(LightComponent.class);
 			light.color = Color.WHITE;
 			light.distance = 1.9f;
 			light.rays = 5;
 			light.x = position.x;
 			light.y = position.y;
-			FPSDepComponent fpsDep = new FPSDepComponent();
+			FPSDepComponent fpsDep = engine.createComponent(FPSDepComponent.class);
 			star.add(relativeSpeed);
 			star.add(size);
 			star.add(sprite);

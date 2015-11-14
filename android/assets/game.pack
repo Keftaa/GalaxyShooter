@@ -5,371 +5,371 @@ filter: Nearest,Nearest
 repeat: none
 nebula
   rotate: false
-  xy: 1, 335
+  xy: 1, 341
   size: 241, 168
   orig: 241, 168
   offset: 0, 0
   index: -1
+shoot
+  rotate: false
+  xy: 1, 179
+  size: 160, 160
+  orig: 160, 160
+  offset: 0, 0
+  index: -1
 meteorGrey_big2
   rotate: false
-  xy: 1, 235
+  xy: 244, 411
   size: 120, 98
   orig: 120, 98
   offset: 0, 0
   index: -1
 meteorBrown_big2
   rotate: false
-  xy: 244, 405
+  xy: 1, 79
   size: 120, 98
   orig: 120, 98
   offset: 0, 0
   index: -1
 meteorBrown_big4
   rotate: false
-  xy: 1, 137
+  xy: 366, 413
   size: 98, 96
   orig: 98, 96
   offset: 0, 0
   index: -1
 meteorGrey_big4
   rotate: false
-  xy: 123, 237
+  xy: 466, 413
   size: 98, 96
   orig: 98, 96
   offset: 0, 0
   index: -1
 playerShip2_damage3
   rotate: false
-  xy: 366, 427
+  xy: 1, 1
   size: 112, 76
   orig: 112, 76
   offset: 0, 0
   index: -1
 playerShip2_damage2
   rotate: false
-  xy: 480, 427
+  xy: 566, 433
   size: 112, 76
   orig: 112, 76
   offset: 0, 0
   index: -1
 playerShip2_damage1
   rotate: false
-  xy: 594, 427
+  xy: 680, 433
   size: 111, 76
   orig: 111, 76
   offset: 0, 0
   index: -1
 player
   rotate: false
-  xy: 707, 428
+  xy: 793, 434
   size: 112, 75
   orig: 112, 75
   offset: 0, 0
   index: -1
 meteorBrown_big1
   rotate: false
-  xy: 1, 51
+  xy: 907, 425
   size: 101, 84
   orig: 101, 84
-  offset: 0, 0
-  index: -1
-meteorGrey_big1
-  rotate: false
-  xy: 821, 419
-  size: 101, 84
-  orig: 101, 84
-  offset: 0, 0
-  index: -1
-playerShip1_damage2
-  rotate: false
-  xy: 924, 427
-  size: 99, 76
-  orig: 99, 76
-  offset: 0, 0
-  index: -1
-playerShip1_damage1
-  rotate: false
-  xy: 924, 349
-  size: 99, 76
-  orig: 99, 76
-  offset: 0, 0
-  index: -1
-playerShip1_damage3
-  rotate: false
-  xy: 244, 327
-  size: 100, 76
-  orig: 100, 76
   offset: 0, 0
   index: -1
 ufoGreen
   rotate: false
-  xy: 223, 234
+  xy: 163, 248
   size: 91, 91
   orig: 91, 91
+  offset: 0, 0
+  index: -1
+playerShip3_blue
+  rotate: false
+  xy: 163, 171
+  size: 98, 75
+  orig: 98, 75
+  offset: 0, 0
+  index: -1
+meteorGrey_big1
+  rotate: false
+  xy: 123, 85
+  size: 101, 84
+  orig: 101, 84
+  offset: 0, 0
+  index: -1
+right
+  rotate: false
+  xy: 244, 348
+  size: 76, 61
+  orig: 76, 61
   offset: 0, 0
   index: -1
 ufoBlue
   rotate: false
-  xy: 316, 234
-  size: 91, 91
-  orig: 91, 91
-  offset: 0, 0
-  index: -1
-playerShip3_damage1
-  rotate: false
-  xy: 346, 327
-  size: 97, 76
-  orig: 97, 76
-  offset: 0, 0
-  index: -1
-ufoRed
-  rotate: false
-  xy: 445, 334
-  size: 91, 91
-  orig: 91, 91
-  offset: 0, 0
-  index: -1
-ufoYellow
-  rotate: false
-  xy: 538, 334
+  xy: 256, 255
   size: 91, 91
   orig: 91, 91
   offset: 0, 0
   index: -1
 meteorBrown_big3
   rotate: false
-  xy: 631, 343
+  xy: 263, 171
   size: 89, 82
   orig: 89, 82
   offset: 0, 0
   index: -1
-playerShip3_damage3
+playerShip1_damage3
   rotate: false
-  xy: 722, 350
+  xy: 226, 93
+  size: 100, 76
+  orig: 100, 76
+  offset: 0, 0
+  index: -1
+left
+  rotate: false
+  xy: 322, 348
+  size: 75, 61
+  orig: 75, 61
+  offset: 0, 0
+  index: -1
+playerShip1_damage2
+  rotate: false
+  xy: 399, 335
+  size: 99, 76
+  orig: 99, 76
+  offset: 0, 0
+  index: -1
+playerShip3_damage1
+  rotate: false
+  xy: 500, 335
   size: 97, 76
   orig: 97, 76
   offset: 0, 0
   index: -1
+ufoRed
+  rotate: false
+  xy: 599, 340
+  size: 91, 91
+  orig: 91, 91
+  offset: 0, 0
+  index: -1
+ufoYellow
+  rotate: false
+  xy: 692, 340
+  size: 91, 91
+  orig: 91, 91
+  offset: 0, 0
+  index: -1
+playerShip1_damage1
+  rotate: false
+  xy: 349, 257
+  size: 99, 76
+  orig: 99, 76
+  offset: 0, 0
+  index: -1
 playerShip1_orange
   rotate: false
-  xy: 821, 342
+  xy: 450, 258
   size: 99, 75
   orig: 99, 75
   offset: 0, 0
   index: -1
 meteorGrey_big3
   rotate: false
-  xy: 409, 243
+  xy: 354, 173
   size: 89, 82
   orig: 89, 82
   offset: 0, 0
   index: -1
-playerShip3_blue
-  rotate: false
-  xy: 500, 257
-  size: 98, 75
-  orig: 98, 75
-  offset: 0, 0
-  index: -1
-playerShip3_damage2
-  rotate: false
-  xy: 722, 272
-  size: 97, 76
-  orig: 97, 76
-  offset: 0, 0
-  index: -1
-shoot
-  rotate: false
-  xy: 821, 260
-  size: 80, 80
-  orig: 80, 80
-  offset: 0, 0
-  index: -1
 down
   rotate: false
-  xy: 600, 257
+  xy: 551, 258
   size: 61, 75
   orig: 61, 75
   offset: 0, 0
   index: -1
+playerShip3_damage3
+  rotate: false
+  xy: 614, 262
+  size: 97, 76
+  orig: 97, 76
+  offset: 0, 0
+  index: -1
+playerShip3_damage2
+  rotate: false
+  xy: 713, 262
+  size: 97, 76
+  orig: 97, 76
+  offset: 0, 0
+  index: -1
+up
+  rotate: false
+  xy: 328, 93
+  size: 61, 76
+  orig: 61, 76
+  offset: 0, 0
+  index: -1
 lineDark13
   rotate: false
-  xy: 1, 1
+  xy: 391, 123
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 lineDark09
   rotate: false
-  xy: 51, 1
+  xy: 391, 73
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
-up
+meteorBrown_tiny1
   rotate: false
-  xy: 101, 157
-  size: 61, 76
-  orig: 61, 76
-  offset: 0, 0
-  index: -1
-right
-  rotate: false
-  xy: 104, 94
-  size: 76, 61
-  orig: 76, 61
-  offset: 0, 0
-  index: -1
-left
-  rotate: false
-  xy: 104, 31
-  size: 75, 61
-  orig: 75, 61
+  xy: 566, 413
+  size: 18, 18
+  orig: 18, 18
   offset: 0, 0
   index: -1
 lineDark26
   rotate: false
-  xy: 164, 187
+  xy: 785, 383
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 meteorBrown_med1
   rotate: false
-  xy: 663, 298
+  xy: 835, 389
   size: 43, 43
   orig: 43, 43
   offset: 0, 0
   index: -1
 meteorBrown_med3
   rotate: false
-  xy: 663, 256
+  xy: 785, 341
   size: 45, 40
   orig: 45, 40
   offset: 0, 0
   index: -1
 meteorGrey_med1
   rotate: false
-  xy: 214, 189
+  xy: 812, 296
   size: 43, 43
   orig: 43, 43
   offset: 0, 0
   index: -1
 meteorGrey_med2
   rotate: false
-  xy: 259, 192
+  xy: 812, 254
   size: 45, 40
   orig: 45, 40
   offset: 0, 0
   index: -1
-meteorGrey_small1
-  rotate: false
-  xy: 164, 157
-  size: 28, 28
-  orig: 28, 28
-  offset: 0, 0
-  index: -1
-powerupGreen_bolt
-  rotate: false
-  xy: 306, 199
-  size: 34, 33
-  orig: 34, 33
-  offset: 0, 0
-  index: -1
-playerLives
-  rotate: false
-  xy: 342, 206
-  size: 37, 26
-  orig: 37, 26
-  offset: 0, 0
-  index: -1
-playerLife1_orange
-  rotate: false
-  xy: 101, 3
-  size: 33, 26
-  orig: 33, 26
-  offset: 0, 0
-  index: -1
-playerLife3_blue
-  rotate: false
-  xy: 136, 3
-  size: 32, 26
-  orig: 32, 26
-  offset: 0, 0
-  index: -1
-meteorBrown_small2
-  rotate: false
-  xy: 381, 206
-  size: 29, 26
-  orig: 29, 26
-  offset: 0, 0
-  index: -1
-meteorBrown_small1
-  rotate: false
-  xy: 412, 213
-  size: 28, 28
-  orig: 28, 28
-  offset: 0, 0
-  index: -1
-meteorGrey_small2
-  rotate: false
-  xy: 442, 215
-  size: 29, 26
-  orig: 29, 26
-  offset: 0, 0
-  index: -1
 bulletRed
   rotate: false
-  xy: 903, 303
+  xy: 1010, 472
   size: 9, 37
   orig: 9, 37
   offset: 0, 0
   index: -1
 bulletGreen
   rotate: false
-  xy: 708, 304
+  xy: 880, 395
   size: 9, 37
   orig: 9, 37
   offset: 0, 0
   index: -1
-meteorBrown_tiny1
+playerLives
   rotate: false
-  xy: 366, 407
-  size: 18, 18
-  orig: 18, 18
+  xy: 891, 397
+  size: 37, 26
+  orig: 37, 26
+  offset: 0, 0
+  index: -1
+powerupGreen_bolt
+  rotate: false
+  xy: 930, 390
+  size: 34, 33
+  orig: 34, 33
+  offset: 0, 0
+  index: -1
+playerLife1_orange
+  rotate: false
+  xy: 966, 397
+  size: 33, 26
+  orig: 33, 26
+  offset: 0, 0
+  index: -1
+playerLife3_blue
+  rotate: false
+  xy: 226, 65
+  size: 32, 26
+  orig: 32, 26
+  offset: 0, 0
+  index: -1
+meteorBrown_small2
+  rotate: false
+  xy: 260, 65
+  size: 29, 26
+  orig: 29, 26
+  offset: 0, 0
+  index: -1
+meteorGrey_small2
+  rotate: false
+  xy: 291, 65
+  size: 29, 26
+  orig: 29, 26
+  offset: 0, 0
+  index: -1
+meteorGrey_small1
+  rotate: false
+  xy: 322, 63
+  size: 28, 28
+  orig: 28, 28
+  offset: 0, 0
+  index: -1
+meteorBrown_small1
+  rotate: false
+  xy: 352, 63
+  size: 28, 28
+  orig: 28, 28
+  offset: 0, 0
+  index: -1
+star
+  rotate: false
+  xy: 349, 335
+  size: 11, 11
+  orig: 11, 11
   offset: 0, 0
   index: -1
 meteorGrey_tiny1
   rotate: false
-  xy: 194, 167
+  xy: 1001, 405
   size: 18, 18
   orig: 18, 18
   offset: 0, 0
   index: -1
 meteorGrey_tiny2
   rotate: false
-  xy: 214, 172
+  xy: 1001, 388
   size: 16, 15
   orig: 16, 15
   offset: 0, 0
   index: -1
 meteorBrown_tiny2
   rotate: false
-  xy: 473, 226
+  xy: 115, 62
   size: 16, 15
   orig: 16, 15
   offset: 0, 0
   index: -1
-star
-  rotate: false
-  xy: 500, 244
-  size: 11, 11
-  orig: 11, 11
-  offset: 0, 0
-  index: -1
 background
   rotate: false
-  xy: 101, 154
+  xy: 123, 176
   size: 1, 1
   orig: 1, 1
   offset: 0, 0

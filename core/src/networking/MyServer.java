@@ -14,10 +14,8 @@ import components.SpeedComponent;
 
 public class MyServer {
 	private Server server;
-	private Engine engine;
 	
-	public MyServer(Engine engine){
-		this.engine = engine;
+	public MyServer(){
 		server = new Server();
 		Kryo kryo = server.getKryo();
 		Kryos.registerAll(kryo);
@@ -50,7 +48,6 @@ public class MyServer {
 					speedInfo[1] = -speedInfo[1];
 					packet.stuff.put("Speed", speedInfo);
 					server.sendToAllExceptUDP(connection.getID(), packet);
-					System.out.println("Server received and relayed a packet.");
 				}
 			}
 			

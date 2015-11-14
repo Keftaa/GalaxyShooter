@@ -5,6 +5,7 @@ import networking.MyServer;
 import screens.GameScreen;
 
 import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,7 +15,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 public class Main extends Game {
 	
 	public TextureAtlas atlas;
-	public Engine engine;
+	public PooledEngine engine;
 	public SpriteBatch batch;
 	public FitViewport viewport;
 	public MyClient client;
@@ -24,8 +25,8 @@ public class Main extends Game {
 	
 	@Override
 	public void create() {
-		engine = new Engine();
-		server = new MyServer(engine); server.serverListener();
+		engine = new PooledEngine();
+		server = new MyServer(); server.serverListener();
 		client = new MyClient(engine);
 		
 		batch = new SpriteBatch();

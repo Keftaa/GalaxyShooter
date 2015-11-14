@@ -3,14 +3,12 @@ package components;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
-public class RelativeSpeedComponent implements Component, Poolable {
-	public boolean leader=false;
-	public int groupId;
+public class EngineCapacityComponent implements Component, Poolable {
+	public float maxTime = 0;
 	
 	@Override
 	public void reset() {
-		leader = false;
-		groupId = -1;
+		maxTime = 0;
 		
 	}
 }

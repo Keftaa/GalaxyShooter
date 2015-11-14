@@ -8,6 +8,7 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
+import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.MathUtils;
@@ -30,10 +31,10 @@ public class OutOfBoundsSystem extends IteratingSystem {
 			.getFor(OutOfBoundsComponent.class);
 	private ComponentMapper<BodyComponent> bodyMapper = ComponentMapper.getFor(BodyComponent.class);
 
-	private Engine engine;
+	private PooledEngine engine;
 	private BodyGenerator bodyGenerator;
 	
-	public OutOfBoundsSystem(FitViewport viewport, LightsManager lightsManager, Engine engine, BodyGenerator bodyGenerator) {
+	public OutOfBoundsSystem(FitViewport viewport, LightsManager lightsManager, PooledEngine engine, BodyGenerator bodyGenerator) {
 		super(Family.all(RenderableComponent.class, OutOfBoundsComponent.class)
 				.get());
 		this.viewport = viewport;

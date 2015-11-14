@@ -22,8 +22,8 @@ public class SpriteRenderingSystem extends IteratingSystem implements
 			.getFor(SizeComponent.class);
 	private ComponentMapper<PositionComponent> positionMapper = ComponentMapper
 			.getFor(PositionComponent.class);
-	private ComponentMapper<DamageSpriteComponent> damageSpriteMapper = ComponentMapper
-			.getFor(DamageSpriteComponent.class);
+//	private ComponentMapper<DamageSpriteComponent> damageSpriteMapper = ComponentMapper
+//			.getFor(DamageSpriteComponent.class);
 
 	private SpriteBatch batch;
 
@@ -38,10 +38,10 @@ public class SpriteRenderingSystem extends IteratingSystem implements
 	public void entityAdded(Entity entity) {
 		SpriteComponent sprite = spriteMapper.get(entity);
 		SizeComponent size = sizeMapper.get(entity);
-		DamageSpriteComponent damageSprite = damageSpriteMapper.get(entity);
+//		DamageSpriteComponent damageSprite = damageSpriteMapper.get(entity);
 		sprite.sprite.setSize(size.width * 2, size.height * 2); // bcos body is
-		if(damageSprite != null)
-			damageSprite.damageSprite.setSize(size.width * 2, size.height * 2);														// hw hh
+//		if(damageSprite != null && damageSprite.damageSprite != null)
+//			damageSprite.damageSprite.setSize(size.width * 2, size.height * 2);														// hw hh
 	}
 
 	@Override
@@ -54,18 +54,18 @@ public class SpriteRenderingSystem extends IteratingSystem implements
 	protected void processEntity(Entity entity, float deltaTime) {
 		PositionComponent position = positionMapper.get(entity);
 		SpriteComponent sprite = spriteMapper.get(entity);
-		DamageSpriteComponent damageSprite = damageSpriteMapper.get(entity);
+//		DamageSpriteComponent damageSprite = damageSpriteMapper.get(entity);
 		if (!sprite.afterLight) {
 			sprite.sprite.draw(batch);
 			sprite.sprite.setPosition(
 					position.x - sprite.sprite.getWidth() / 2, position.y
 							- sprite.sprite.getHeight() / 2);
-			if(damageSprite != null){
-				damageSprite.damageSprite.setPosition(
-						position.x - sprite.sprite.getWidth() / 2, position.y
-								- sprite.sprite.getHeight() / 2);			
-				damageSprite.damageSprite.draw(batch);			
-			}
+//			if(damageSprite != null){
+//				damageSprite.damageSprite.setPosition(
+//						position.x - sprite.sprite.getWidth() / 2, position.y
+//								- sprite.sprite.getHeight() / 2);			
+//				damageSprite.damageSprite.draw(batch);			
+//			}
 
 		}
 		

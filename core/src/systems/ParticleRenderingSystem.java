@@ -47,7 +47,7 @@ public class ParticleRenderingSystem extends EntitySystem {
 			ParticleComponent particle = particleMapper.get(entities.get(i));
 			if(particle.getType()==ParticleType.Movement){
 				if (oldPositions.size - 1 > i) {
-					if (position.y != oldPositions.get(i).y) {
+					if (position.y != oldPositions.get(i).y && particle.effect != null) {
 						particle.effect.setPosition(position.x, position.y);
 						particle.effect.draw(batch, deltaTime);
 						
@@ -55,8 +55,6 @@ public class ParticleRenderingSystem extends EntitySystem {
 						oldPositions.set(i, new Vector2(position.x, position.y));
 						if (particle.effect.isComplete())
 							particle.effect.reset();
-					} else {
-						particle.effect.free();
 					}
 				} else {
 					oldPositions.add(new Vector2(position.x, position.y));

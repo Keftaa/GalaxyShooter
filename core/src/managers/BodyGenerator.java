@@ -122,6 +122,7 @@ public class BodyGenerator implements EntityListener {
 			this.createAndAddBody(entity, sizeVector, positionVector);
 		else
 			this.createAndAddBody(entity, sizeVector, positionVector, body.vertices);
+
 	}
 
 	@Override

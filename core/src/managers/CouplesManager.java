@@ -22,6 +22,7 @@ public class CouplesManager implements EntityListener {
 			couplesMap.get(key).add(entity);
 		}
 		
+		
 	}
 
 	@Override

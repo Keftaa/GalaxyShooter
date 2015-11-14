@@ -1,9 +1,12 @@
 package components;
 
 import com.badlogic.ashley.core.Component;
-import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool.Poolable;
 
-public class DispatchableComponent implements Component {
+public class DispatchableComponent implements Component, Poolable {
+
+	@Override
+	public void reset() {}
 	
-	public Array<Component> componentsToDispatch = new Array<Component>();
+
 }

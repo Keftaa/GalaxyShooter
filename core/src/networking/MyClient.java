@@ -1,6 +1,7 @@
 package networking;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,6 +11,7 @@ import java.util.Set;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -23,10 +25,14 @@ import com.galaxyshooter.game.Assets;
 import com.galaxyshooter.game.Assets.GameSprite;
 
 import components.BodyComponent;
+import components.BulletRateComponent;
+import components.ContactDamageComponent;
 import components.ControllableComponent;
 import components.CoupledComponent;
 import components.DamageSpriteComponent;
 import components.DispatchableComponent;
+import components.EngineCapacityComponent;
+import components.HealthComponent;
 import components.LaunchableComponent;
 import components.LightComponent;
 import components.OutOfBoundsComponent;
@@ -40,18 +46,21 @@ import components.SpriteComponent;
 
 public class MyClient {
 	private Client client;
-	private Engine engine;
+	private PooledEngine engine;
 	private Packet packet;
-
-	public MyClient(Engine engine) {
+	private InetAddress address;
+	
+	public MyClient(PooledEngine engine) {
 		this.engine = engine;
 		client = new Client();
+		address = client.discoverHost(6000, 10000);
+		System.out.println(address);
 		packet = new Packet();
 		Kryo kryo = client.getKryo();
 		Kryos.registerAll(kryo);
 		client.start();
 		try {
-			client.connect(5000, "localhost", 5000, 6000);
+			client.connect(5000, address, 5000, 6000);
 			clientListener();
 		} catch (IOException e) {
 			System.out.println("Could not connect to server");
@@ -74,7 +83,6 @@ public class MyClient {
 					for(Component c: components)
 						entity.add(c);
 					engine.addEntity(entity);
-					System.out.println("Added entity with the following components: "+components);
 				}
 			}
 
@@ -189,7 +197,35 @@ public class MyClient {
 
 			return new SimpleEntry<String, Object>("Body", vertices);
 		}
+		
+		else if(component instanceof EngineCapacityComponent){
+			EngineCapacityComponent engine = (EngineCapacityComponent) component;
+			float maxTime = engine.maxTime;
+			return new SimpleEntry<String, Object>("EngineCapacity", maxTime);
+			
+		}
 
+		else if(component instanceof BulletRateComponent){
+			BulletRateComponent bulletRate = (BulletRateComponent) component;
+			float rate = bulletRate.bulletsPerSecond;
+			return new SimpleEntry<String, Object>("BulletRate", rate);
+			
+		}
+		
+		else if(component instanceof HealthComponent){
+			HealthComponent health = (HealthComponent) component;
+			int[] hpAndDamage = {health.hp, health.damageTaken};
+			
+			return new SimpleEntry<String, Object>("Health", hpAndDamage);
+		}
+		
+		else if(component instanceof ContactDamageComponent){
+			ContactDamageComponent damage = (ContactDamageComponent) component;
+			int damagePoints = damage.damagePoints;
+			
+			return new SimpleEntry<String, Object>("ContactDamage", damagePoints);
+		}
+		
 		return null;
 	}
 	
@@ -200,7 +236,7 @@ public class MyClient {
 		for(String key: map.keySet()){
 			if(key.equals("Sprite")){
 				Object[] info = (Object[]) map.get(key);
-				SpriteComponent sprite = new SpriteComponent();
+				SpriteComponent sprite = engine.createComponent(SpriteComponent.class);
 				
 				sprite.sprite =  Assets.GameSprite.values()[(Integer) info[0]].getSprite();
 				sprite.afterLight = (Boolean) info[1];
@@ -210,7 +246,7 @@ public class MyClient {
 			
 			else if(key.equals("Speed")){
 				float[] info = (float[]) map.get(key);
-				SpeedComponent speed = new SpeedComponent();
+				SpeedComponent speed = engine.createComponent(SpeedComponent.class);
 				speed.x = info[0];
 				speed.y = info[1];
 				speed.active = true; // we're not going to transfer that's not moving lol
@@ -220,7 +256,7 @@ public class MyClient {
 			
 			else if(key.equals("Size")){
 				float[] info = (float[]) map.get(key);
-				SizeComponent size = new SizeComponent();
+				SizeComponent size = engine.createComponent(SizeComponent.class);
 				size.width = info[0];
 				size.height = info[1];
 				
@@ -228,7 +264,7 @@ public class MyClient {
 			}
 			
 			else if(key.equals("Renderable")){
-				RenderableComponent renderable = new RenderableComponent();
+				RenderableComponent renderable = engine.createComponent(RenderableComponent.class);
 				components.add(renderable);
 			}
 			
@@ -236,7 +272,7 @@ public class MyClient {
 			
 			else if(key.equals("Position")){
 				float[] info = (float[]) map.get(key);
-				PositionComponent position = new PositionComponent();
+				PositionComponent position = engine.createComponent(PositionComponent.class);
 				position.x = info[0];
 				position.y = info[1];
 				position.overridenByBody = info[2]==1;
@@ -246,7 +282,7 @@ public class MyClient {
 			
 			else if(key.equals("Particle")){
 				int info = (Integer) map.get(key);
-				ParticleComponent particle = new ParticleComponent();
+				ParticleComponent particle = engine.createComponent(ParticleComponent.class);
 				particle.gameParticle = ParticleComponent.GameParticle.values()[info];
 				
 				components.add(particle);
@@ -254,13 +290,13 @@ public class MyClient {
 			
 			else if(key.equals("OutOfBounds")){
 				int info = (Integer) map.get(key);
-				OutOfBoundsComponent outOfBounds = new OutOfBoundsComponent();
+				OutOfBoundsComponent outOfBounds = engine.createComponent(OutOfBoundsComponent.class);
 				outOfBounds.action = OutOfBoundsComponent.AdequateAction.values()[info];
 			}
 			
 			else if(key.equals("Light")){
 				Object[] info = (Object[]) map.get(key);
-				LightComponent light = new LightComponent();
+				LightComponent light = engine.createComponent(LightComponent.class);
 				light.color = (Color) info[0];
 				light.distance = (Float) info[1];
 				light.rays = (Integer) info[2];
@@ -276,7 +312,7 @@ public class MyClient {
 			
 			else if(key.equals("DamageSprite")){
 				int info = (Integer) map.get(key);
-				DamageSpriteComponent damageSprite = new DamageSpriteComponent();
+				DamageSpriteComponent damageSprite = engine.createComponent(DamageSpriteComponent.class);
 				damageSprite.damageSprite = Assets.GameSprite.values()[info].getSprite();
 				
 				components.add(damageSprite);
@@ -288,20 +324,53 @@ public class MyClient {
 			
 			else if(key.equals("Body")){
 				if(map.get(key)==null){
-					components.add(new BodyComponent());
+					components.add(engine.createComponent(BodyComponent.class));
 				}
 				else{
 					float [][] info = (float[][]) map.get(key);
 					Vector2[] vertices = new Vector2[info.length];
 					for(int i = 0; i < info.length; i++)
 						vertices[i].set(info[i][0], info[i][1]);
-					BodyComponent body = new BodyComponent();
+					BodyComponent body = engine.createComponent(BodyComponent.class);
 					body.vertices = vertices;
 					
 					components.add(body);		
 				}
 
 			}
+			
+			else if(key.equals("EngineCapacity")){
+				float info = (Float) map.get(key);
+				EngineCapacityComponent engineCapacity = engine.createComponent(EngineCapacityComponent.class);
+				engineCapacity.maxTime = info;
+				components.add(engineCapacity);
+			}
+			
+			else if(key.equals("BulletRate")){
+				float info = (Float) map.get(key);
+				BulletRateComponent bulletRate = engine.createComponent(BulletRateComponent.class);
+				bulletRate.bulletsPerSecond = info;
+				
+				components.add(bulletRate);
+			}
+			
+			else if(key.equals("Health")){
+				Integer[] info = (Integer[]) map.get(key);
+				HealthComponent health = engine.createComponent(HealthComponent.class);
+				health.hp = info[0];
+				health.damageTaken = info[1];
+				
+				components.add(health);
+			}
+			
+			else if(key.equals("ContactDamage")){
+				int info = (Integer) map.get(key);
+				ContactDamageComponent damage = engine.createComponent(ContactDamageComponent.class);
+				damage.damagePoints = info;
+				
+				components.add(damage);
+			}
+			
 				
 		}
 		

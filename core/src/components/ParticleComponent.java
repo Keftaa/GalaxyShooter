@@ -2,8 +2,9 @@ package components;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool.PooledEffect;
+import com.badlogic.gdx.utils.Pool.Poolable;
 
-public class ParticleComponent implements Component {
+public class ParticleComponent implements Component, Poolable {
 
 	public enum GameParticle{
 		ThrustParticle, BulletThrustParticle, BulletExplosionParticle;
@@ -31,4 +32,10 @@ public class ParticleComponent implements Component {
 	public GameParticle gameParticle;
 	
 	public PooledEffect effect; // set by the particle manager
+
+	@Override
+	public void reset() {
+		gameParticle = null;
+		
+	}
 }
