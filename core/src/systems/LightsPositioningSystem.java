@@ -16,7 +16,6 @@ public class LightsPositioningSystem extends IteratingSystem {
 	private ComponentMapper<LightComponent> lightsMapper = ComponentMapper
 			.getFor(LightComponent.class);
 
-	@SuppressWarnings("unchecked")
 	public LightsPositioningSystem() {
 		super(Family.all(PositionComponent.class, LightComponent.class,
 				RenderableComponent.class).get());
@@ -27,6 +26,7 @@ public class LightsPositioningSystem extends IteratingSystem {
 			PositionComponent position = positionsMapper.get(entity);
 			LightComponent light = lightsMapper.get(entity);
 			
+			if(light.light==null) return;
 			light.light.setPosition(position.x, position.y);
 	}
 

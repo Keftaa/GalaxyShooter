@@ -4,9 +4,14 @@ import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.utils.Pool.Poolable;
 
 public class DispatchableComponent implements Component, Poolable {
-
+	
+	public boolean permanent = false;
 	@Override
-	public void reset() {}
+	public void reset() {
+		
+		permanent = false;
+		
+	}
 	
 
 }

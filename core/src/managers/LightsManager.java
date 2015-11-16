@@ -31,12 +31,17 @@ public class LightsManager implements EntityListener {
 		LightComponent light = lightsMapper.get(entity);
 		
 		PointLight pointLight = new PointLight(handler, light.rays, light.color, light.distance, light.x, light.y);
+		
 		light.light = pointLight;
+		
+		System.out.println("Light manager has just created a light !"+light.distance);
+
 	}
 
 	@Override
 	public void entityRemoved(Entity entity) {
 		LightComponent light = lightsMapper.get(entity);
+		if(light==null || light.light==null) return;
 		light.light.remove();
 		entity.remove(LightComponent.class);
 		

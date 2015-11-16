@@ -26,8 +26,7 @@ public class NetworkDispatcher implements EntityListener {
 
 	@Override
 	public void entityRemoved(Entity entity) {
-		client.sendPacket(entity.getComponents());
-		System.out.println(entity.getComponents());
+		client.sendPacket(entity.getComponents(), "Bullet");
 	}
 
 }

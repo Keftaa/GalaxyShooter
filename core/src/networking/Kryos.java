@@ -25,6 +25,8 @@ public class Kryos {
 		kryo.register(Packet.class);
 		kryo.register(float[].class);
 		kryo.register(Object[].class);
+		kryo.register(int[].class);
+		kryo.register(float[][].class);
 		kryo.register(HashMap.class);
 		kryo.register(com.badlogic.gdx.graphics.Color.class);
 	}

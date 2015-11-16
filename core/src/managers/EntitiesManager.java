@@ -3,10 +3,12 @@ package managers;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.galaxyshooter.game.Assets;
+import com.galaxyshooter.game.Constants;
 
 import components.BodyComponent;
 import components.BulletRateComponent;
@@ -33,10 +35,12 @@ import components.SpriteComponent;
 public class EntitiesManager {
 	private PooledEngine engine;
 	private FitViewport viewport;
-
-	public EntitiesManager(PooledEngine engine, FitViewport viewport) {
+	private Assets assets;
+	
+	public EntitiesManager(PooledEngine engine, FitViewport viewport, Assets assets) {
 		this.engine = engine;
 		this.viewport = viewport;
+		this.assets = assets;
 	}
 
 	public Entity createBullet() {
@@ -57,7 +61,7 @@ public class EntitiesManager {
 			size.height = 1f;
 			speed.x = 0;
 			speed.y = 20;
-			sprite.sprite = Assets.GameSprite.GreenLaser.getSprite();
+			sprite.sprite =  new AtlasSprite(assets.atlas.findRegion(Assets.GameSprite.GreenLaser.getName()));
 			sprite.afterLight = true;
 			coupled.coupleId = 0;
 			coupled.offsetX = 0f;
@@ -105,6 +109,7 @@ public class EntitiesManager {
 		ParticleComponent particle = engine.createComponent(ParticleComponent.class);
 		EngineCapacityComponent engineCapacity = engine.createComponent(EngineCapacityComponent.class);
 		HealthComponent health = engine.createComponent(HealthComponent.class);
+		DispatchableComponent dispatchable = engine.createComponent(DispatchableComponent.class);
 
 		position.x = 10;
 		position.y = 5;
@@ -113,7 +118,7 @@ public class EntitiesManager {
 		size.height = 4.01f;
 		speed.x = 100;
 		speed.y = 0;
-		sprite.sprite = Assets.GameSprite.GreenShip.getSprite();
+		sprite.sprite = new AtlasSprite(assets.atlas.findRegion(Assets.GameSprite.GreenShip.getName()));
 		sprite.afterLight = true;
 		coupled.coupleId = 0;
 		coupled.leader = true;
@@ -139,6 +144,7 @@ public class EntitiesManager {
 		particle.gameParticle = GameParticle.ThrustParticle;
 		engineCapacity.maxTime = 10;
 		health.hp = 100;
+		dispatchable.permanent = true;
 		
 		player.add(renderable);
 		player.add(position);
@@ -154,6 +160,7 @@ public class EntitiesManager {
 		player.add(particle);
 		player.add(engineCapacity);
 		player.add(health);
+		player.add(dispatchable);
 		engine.addEntity(player);
 	}
 
@@ -167,7 +174,7 @@ public class EntitiesManager {
 		bSize.height = viewport.getWorldHeight();
 		RenderableComponent bRenderable = engine.createComponent(RenderableComponent.class);
 		SpriteComponent bSprite = engine.createComponent(SpriteComponent.class);
-		bSprite.sprite = Assets.GameSprite.Background.getSprite();
+		bSprite.sprite = new AtlasSprite(assets.atlas.findRegion(Assets.GameSprite.Background.getName()));
 
 		background.add(bSize);
 		background.add(bPosition);
@@ -180,7 +187,7 @@ public class EntitiesManager {
 			Entity star = engine.createEntity();
 			star.add(new RenderableComponent());
 			SpriteComponent sprite = engine.createComponent(SpriteComponent.class);
-			sprite.sprite =  Assets.GameSprite.Star.getSprite();
+			sprite.sprite =  new AtlasSprite(assets.atlas.findRegion(Assets.GameSprite.Star.getName()));
 			
 			sprite.afterLight = true;
 			SizeComponent size = engine.createComponent(SizeComponent.class);
@@ -227,7 +234,7 @@ public class EntitiesManager {
 			Entity star = engine.createEntity();
 			star.add(new RenderableComponent());
 			SpriteComponent sprite = engine.createComponent(SpriteComponent.class);
-			sprite.sprite =  Assets.GameSprite.Star.getSprite();
+			sprite.sprite =  new AtlasSprite(assets.atlas.findRegion(Assets.GameSprite.Star.getName()));
 			sprite.afterLight = true;
 			SizeComponent size = engine.createComponent(SizeComponent.class);
 			size.width = MathUtils.random(0.5f, 1);
@@ -264,6 +271,32 @@ public class EntitiesManager {
 
 			engine.addEntity(star);
 		}
+	}
+	
+	public Entity oppLight(){
+		Entity oppLight = engine.createEntity();
+		PositionComponent position = engine.createComponent(PositionComponent.class);
+		position.x = 0;
+		position.y = 0;
+
+		oppLight.add(engine.createComponent(RenderableComponent.class));
+		
+		LightComponent light = engine.createComponent(LightComponent.class);
+		light.x = 0;
+		light.y = Constants.WORLD_HEIGHT /2;
+		light.color = Color.RED;
+		light.distance = 300;
+		light.rays = 200;
+		
+		oppLight.add(position);
+		oppLight.add(light);
+		
+		return oppLight;
+	}
+	
+	public void initOppLight(){
+		Entity oppLight = oppLight();
+		engine.addEntity(oppLight);
 	}
 	
 

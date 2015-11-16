@@ -17,6 +17,7 @@ import systems.MovementSystem;
 import systems.OutOfBoundsSystem;
 import systems.ParticleRenderingSystem;
 import systems.PositionSyncSystem;
+import systems.RealTimeNetworkSystem;
 import systems.RelativeSpeedSystem;
 import systems.SpriteRenderingAfterLightSystem;
 import systems.SpriteRenderingSystem;
@@ -64,7 +65,6 @@ public class GameScreen implements Screen {
 		this.main = main;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void show() {
 		world = new World(new Vector2(0, 0), true);
@@ -74,7 +74,7 @@ public class GameScreen implements Screen {
 
 		bodyGenerator = new BodyGenerator(world);
 
-		entitiesManager = new EntitiesManager(main.engine, main.viewport);
+		entitiesManager = new EntitiesManager(main.engine, main.viewport, main.assets);
 
 		lightsManager = new LightsManager(world, main.viewport);
 
@@ -102,7 +102,7 @@ public class GameScreen implements Screen {
 
 		main.engine.addEntityListener(
 				Family.all(LightComponent.class, RenderableComponent.class)
-						.get(), lightsManager);
+						.get(), -10, lightsManager);
 
 		main.engine.addEntityListener(Family.all(DispatchableComponent.class)
 				.get(), new NetworkDispatcher(main.client));
@@ -111,12 +111,19 @@ public class GameScreen implements Screen {
 				Family.all(ParticleComponent.class).get(),
 				new ParticlesManager());
 
-		hud = new HUD(main.engine);
+		hud = new HUD(main.engine, main.assets);
 		main.engine.addEntityListener(Family.all(ControllableComponent.class)
 				.get(), hud);
 
 		// main.engine.addSystem(new ControllingSystem());
-		main.engine.addSystem(new DamageSpriteSystem(main.batch));
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		main.engine.addSystem(new RealTimeNetworkSystem(main.client));
+		main.engine.addSystem(new DamageSpriteSystem(main.batch, main.assets));
 		main.engine.addSystem(new PositionSyncSystem());
 		main.engine.addSystem(new CouplesSystem(main.batch));
 		main.engine.addSystem(new MovementSystem());
@@ -130,10 +137,11 @@ public class GameScreen implements Screen {
 		main.engine.addSystem(new SpriteRenderingAfterLightSystem(main.batch));
 		main.engine.addSystem(new SpriteRenderingSystem(main.batch));
 		main.engine.addSystem(new ParticleRenderingSystem(main.batch));
-
+		
 		entitiesManager.addBackgroundWithStars(40);
 		entitiesManager.addPlayer();
 		entitiesManager.initBullet();
+		main.nEntities.loadAll();
 
 	}
 

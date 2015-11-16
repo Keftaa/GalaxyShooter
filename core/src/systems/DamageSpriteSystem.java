@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasSprite;
 import com.galaxyshooter.game.Assets;
 
 import components.DamageSpriteComponent;
@@ -24,11 +25,13 @@ public class DamageSpriteSystem extends IteratingSystem {
 			.getFor(HealthComponent.class);
 
 	private SpriteBatch batch;
+	private Assets assets;
 
-	public DamageSpriteSystem(SpriteBatch batch) {
+	public DamageSpriteSystem(SpriteBatch batch, Assets assets) {
 		super(Family.all(DamageSpriteComponent.class, SizeComponent.class,
 				PositionComponent.class, HealthComponent.class).get());
 		this.batch = batch;
+		this.assets = assets;
 	}
 
 	@Override
@@ -56,17 +59,19 @@ public class DamageSpriteSystem extends IteratingSystem {
 		
 
 		if(health.damageTaken>health.hp/2f){
-			if(damageSprite.damageSprite != Assets.GameSprite.Damage3.getSprite())
-				damageSprite.damageSprite = Assets.GameSprite.Damage3.getSprite();
+			if(!damageSprite.damageSprite.getAtlasRegion().name.equals(Assets.GameSprite.Damage3.getName()))
+				damageSprite.damageSprite = new AtlasSprite(assets.atlas.findRegion(Assets.GameSprite.Damage3.getName())); 
 		}
 		else if(health.damageTaken>health.hp/4f){
-			if(damageSprite.damageSprite != Assets.GameSprite.Damage2.getSprite())
-				damageSprite.damageSprite = Assets.GameSprite.Damage2.getSprite();
+			if(!damageSprite.damageSprite.getAtlasRegion().name.equals(Assets.GameSprite.Damage2.getName()))
+				damageSprite.damageSprite = new AtlasSprite(assets.atlas.findRegion(Assets.GameSprite.Damage2.getName())); 
 		}
 		
 		else if(health.damageTaken>health.hp/6f){
-			if(damageSprite.damageSprite != Assets.GameSprite.Damage1.getSprite())
-				damageSprite.damageSprite = Assets.GameSprite.Damage1.getSprite();		
+			if(damageSprite.damageSprite==null)
+				damageSprite.damageSprite = new AtlasSprite(assets.atlas.findRegion(Assets.GameSprite.Damage1.getName())); 
+			if(!damageSprite.damageSprite.getAtlasRegion().name.equals(Assets.GameSprite.Damage1.getName()))
+				damageSprite.damageSprite = new AtlasSprite(assets.atlas.findRegion(Assets.GameSprite.Damage1.getName())); 
 			
 		}
 		else{

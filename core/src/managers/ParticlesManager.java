@@ -29,8 +29,13 @@ public class ParticlesManager implements EntityListener {
 		ParticleComponent particle = particleMapper.get(entity);
 		PositionComponent position = positionMapper.get(entity);
 		if (pools.containsKey(particle.gameParticle)) {
-			particle.effect = pools.get(particle.gameParticle).obtain();
-			particle.effect.setPosition(position.x, position.y);
+			try{
+				particle.effect = pools.get(particle.gameParticle).obtain();
+				particle.effect.setPosition(position.x, position.y);
+			} catch(NullPointerException e){
+				return;
+			}
+
 		}
 
 		else {

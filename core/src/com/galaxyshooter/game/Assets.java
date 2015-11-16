@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 public class Assets {
-	private final static TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("game.pack"));;
+	public final TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("game.pack"));
 	
 	public enum GameSprite {
 		GreenShip("player"), RedLaser("bulletRed"), GreenLaser("bulletGreen"),
@@ -19,13 +19,13 @@ public class Assets {
 		GreenShipLives("playerLives"), Up("up"), Down("down"), Left("right"),
 		Right("left"), Shoot("shoot");
 		
-		private Sprite sprite;
+		private String name;
 		GameSprite(String atlasRef){
-			sprite = atlas.createSprite(atlasRef);
+			name = atlasRef;
 		}
 		
-		public Sprite getSprite(){
-			return sprite;
+		public String getName(){
+			return name;
 		}
 
 		
@@ -33,9 +33,9 @@ public class Assets {
 	
 
 	
-	public static int getSpriteID(Sprite sprite){
+	public static int getSpriteID(String name){
 		for(GameSprite gameSprite: GameSprite.values())
-			if(gameSprite.getSprite().equals(sprite))
+			if(gameSprite.getName().equals(name))
 				return gameSprite.ordinal();
 		return -1;
 	}

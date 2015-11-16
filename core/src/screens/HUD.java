@@ -44,8 +44,10 @@ public class HUD implements EntityListener {
 	
 	private float shotEngineCounter, maxTime;
 	private boolean shootButtonPressed;
-
-	HUD(Engine engine) {
+	private Assets assets;
+	
+	HUD(Engine engine, Assets assets) {
+		this.assets = assets;
 		viewport = new FitViewport(800, 480);
 		this.engine = engine;
 
@@ -57,10 +59,10 @@ public class HUD implements EntityListener {
 
 		root.debug();
 		lives = new HorizontalGroup();
-		life1 = new Image(Assets.GameSprite.GreenShipLives.getSprite());
-		life2 = new Image(Assets.GameSprite.GreenShipLives.getSprite());
-		life3 = new Image(Assets.GameSprite.GreenShipLives.getSprite());
-		life4 = new Image(Assets.GameSprite.GreenShipLives.getSprite());
+		life1 = new Image(assets.atlas.findRegion(Assets.GameSprite.GreenShipLives.getName()));
+		life2 = new Image(assets.atlas.findRegion(Assets.GameSprite.GreenShipLives.getName()));
+		life3 = new Image(assets.atlas.findRegion(Assets.GameSprite.GreenShipLives.getName()));
+		life4 = new Image(assets.atlas.findRegion(Assets.GameSprite.GreenShipLives.getName()));
 		life1.setPosition(0, 0);
 		life2.setPosition(life1.getWidth(), 0);
 		life3.setPosition(life1.getWidth() * 2, 0);
@@ -72,11 +74,11 @@ public class HUD implements EntityListener {
 
 		arrows = new Group();
 		arrows.setBounds(0, 0, 250, 150);
-		upArrow = new Image(Assets.GameSprite.Up.getSprite());
-		downArrow = new Image(Assets.GameSprite.Down.getSprite());
-		rightArrow = new Image(Assets.GameSprite.Right.getSprite());
-		leftArrow = new Image(Assets.GameSprite.Left.getSprite());
-		shootButton = new Image(new SpriteDrawable(Assets.GameSprite.Shoot.getSprite()));
+		upArrow = new Image(assets.atlas.findRegion(Assets.GameSprite.Up.getName()));
+		downArrow = new Image(assets.atlas.findRegion(Assets.GameSprite.Down.getName()));
+		rightArrow = new Image(assets.atlas.findRegion(Assets.GameSprite.Right.getName()));
+		leftArrow = new Image(assets.atlas.findRegion(Assets.GameSprite.Left.getName()));
+		shootButton = new Image(assets.atlas.findRegion(Assets.GameSprite.Shoot.getName()));
 
 		upArrow.setBounds(arrows.getWidth() / 3,
 				arrows.getHeight() - arrows.getHeight() / 2,
