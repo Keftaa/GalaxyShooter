@@ -2,6 +2,8 @@ package screens;
 
 import java.util.HashMap;
 
+import managers.HealthManager;
+import managers.ScoreManager;
 import systems.BulletsLauncherSystem;
 
 import com.badlogic.ashley.core.ComponentMapper;
@@ -16,6 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -41,13 +45,16 @@ public class HUD implements EntityListener {
 	private Table root;
 	private Image life1, life2, life3, life4, upArrow, downArrow, leftArrow,
 			rightArrow, shootButton;
+	private Label scoreLabel, healthLabel;
+	private int healthLeft;
 	
 	private float shotEngineCounter, maxTime;
 	private boolean shootButtonPressed;
-	private Assets assets;
-	
-	HUD(Engine engine, Assets assets) {
-		this.assets = assets;
+	private ScoreManager scoreManager;
+	private HealthManager healthManager;
+	HUD(Engine engine, Assets assets, Skin skin, ScoreManager scoreManager, HealthManager healthManager) {
+		this.scoreManager = scoreManager;
+		this.healthManager = healthManager;
 		viewport = new FitViewport(800, 480);
 		this.engine = engine;
 
@@ -59,19 +66,21 @@ public class HUD implements EntityListener {
 
 		root.debug();
 		lives = new HorizontalGroup();
-		life1 = new Image(assets.atlas.findRegion(Assets.GameSprite.GreenShipLives.getName()));
-		life2 = new Image(assets.atlas.findRegion(Assets.GameSprite.GreenShipLives.getName()));
-		life3 = new Image(assets.atlas.findRegion(Assets.GameSprite.GreenShipLives.getName()));
-		life4 = new Image(assets.atlas.findRegion(Assets.GameSprite.GreenShipLives.getName()));
-		life1.setPosition(0, 0);
-		life2.setPosition(life1.getWidth(), 0);
-		life3.setPosition(life1.getWidth() * 2, 0);
-		life4.setPosition(life1.getWidth() * 3, 0);
-		lives.addActor(life1);
-		lives.addActor(life2);
-		lives.addActor(life3);
-		lives.addActor(life4);
-
+//		life1 = new Image(assets.atlas.findRegion(Assets.GameSprite.GreenShipLives.getName()));
+//		life2 = new Image(assets.atlas.findRegion(Assets.GameSprite.GreenShipLives.getName()));
+//		life3 = new Image(assets.atlas.findRegion(Assets.GameSprite.GreenShipLives.getName()));
+//		life4 = new Image(assets.atlas.findRegion(Assets.GameSprite.GreenShipLives.getName()));
+//		life1.setPosition(0, 0);
+//		life2.setPosition(life1.getWidth(), 0);
+//		life3.setPosition(life1.getWidth() * 2, 0);
+//		life4.setPosition(life1.getWidth() * 3, 0);
+//		lives.addActor(life1);
+//		lives.addActor(life2);
+//		lives.addActor(life3);
+//		lives.addActor(life4);
+		
+		scoreLabel = new Label(String.valueOf(scoreManager.score), skin, "lblSmall");
+		healthLabel = new Label("HP: "+healthManager.healthLeft, skin, "lblSmall");
 		arrows = new Group();
 		arrows.setBounds(0, 0, 250, 150);
 		upArrow = new Image(assets.atlas.findRegion(Assets.GameSprite.Up.getName()));
@@ -102,10 +111,13 @@ public class HUD implements EntityListener {
 		root.setPosition(0, 0);
 		root.align(Align.bottomLeft);
 		// root.align(Align.left);
-		root.add(lives);
+		root.add(scoreLabel);
+		root.add(healthLabel);
+		
 		root.row().expandY();
 		root.add(arrows).bottom();
 		root.add(shootButton).bottom().right().expand(true, false);
+		
 
 		stage.addActor(root);
 
@@ -136,6 +148,10 @@ public class HUD implements EntityListener {
 		}
 		
 		colorizeShotButton();
+		scoreLabel.setText(String.valueOf(scoreManager.score));
+		scoreManager.render();
+
+		healthLabel.setText(String.valueOf("HP: "+healthManager.healthLeft));
 	}
 
 	@Override

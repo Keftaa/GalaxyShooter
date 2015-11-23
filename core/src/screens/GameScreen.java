@@ -4,10 +4,12 @@ import managers.BodyGenerator;
 import managers.BulletEngineManager;
 import managers.CouplesManager;
 import managers.EntitiesManager;
+import managers.HealthManager;
 import managers.LightsManager;
 import managers.NetworkDispatcher;
 import managers.ParticlesManager;
 import managers.RelativeSpeedManager;
+import managers.ScoreManager;
 import managers.WorldContactListener;
 import systems.BulletsLauncherSystem;
 import systems.CouplesSystem;
@@ -33,6 +35,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.galaxyshooter.game.Constants;
+import com.galaxyshooter.game.Constants.GameState;
 import com.galaxyshooter.game.Main;
 
 import components.BodyComponent;
@@ -40,6 +44,7 @@ import components.BulletRateComponent;
 import components.ControllableComponent;
 import components.CoupledComponent;
 import components.DispatchableComponent;
+import components.HealthComponent;
 import components.LightComponent;
 import components.ParticleComponent;
 import components.PositionComponent;
@@ -58,6 +63,8 @@ public class GameScreen implements Screen {
 	private BodyGenerator bodyGenerator;
 	private EntitiesManager entitiesManager;
 	private LightsManager lightsManager;
+	private ScoreManager scoreManager;
+	private HealthManager healthManager;
 	private BulletEngineManager bulletEngineManager;
 	private HUD hud;
 
@@ -67,8 +74,10 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void show() {
+		scoreManager = new ScoreManager(main.client);
+		healthManager = new HealthManager();
 		world = new World(new Vector2(0, 0), true);
-		worldListener = new WorldContactListener();
+		worldListener = new WorldContactListener(scoreManager, healthManager);
 		world.setContactListener(worldListener);
 		b2drenderer = new Box2DDebugRenderer();
 
@@ -111,17 +120,13 @@ public class GameScreen implements Screen {
 				Family.all(ParticleComponent.class).get(),
 				new ParticlesManager());
 
-		hud = new HUD(main.engine, main.assets);
+		hud = new HUD(main.engine, main.assets, main.skinManager.skin, scoreManager, healthManager);
 		main.engine.addEntityListener(Family.all(ControllableComponent.class)
 				.get(), hud);
 
 		// main.engine.addSystem(new ControllingSystem());
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		main.engine.addEntityListener(Family.all(HealthComponent.class).get(), healthManager);
+		
 		main.engine.addSystem(new RealTimeNetworkSystem(main.client));
 		main.engine.addSystem(new DamageSpriteSystem(main.batch, main.assets));
 		main.engine.addSystem(new PositionSyncSystem());
@@ -149,43 +154,49 @@ public class GameScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		main.batch.setProjectionMatrix(main.viewport.getCamera().combined);
-		main.viewport.apply();
-
-		main.batch.begin();
-
-		for (EntitySystem system : main.engine.getSystems())
-			if (system.checkProcessing())
-				if (!(system instanceof DamageSpriteSystem)
-						&& !(system instanceof SpriteRenderingAfterLightSystem)
-						&& !(system instanceof ParticleRenderingSystem))
-					system.update(delta);
-
-		main.batch.end();
-
-		lightsManager.handler
-				.setCombinedMatrix((OrthographicCamera) main.viewport
-						.getCamera());
-		lightsManager.handler.setAmbientLight(lightsManager.ambientLight);
-		lightsManager.handler.updateAndRender();
-
-		hud.render();
-
-		main.batch.begin();
-		main.engine.getSystem(ParticleRenderingSystem.class).update(delta);
-		main.engine.getSystem(SpriteRenderingAfterLightSystem.class).update(
-				delta);
-
-		main.engine.getSystem(DamageSpriteSystem.class).update(delta);
-
-		main.batch.end();
-	//	b2drenderer.render(world, main.viewport.getCamera().combined);
-		world.step(1 / 60f, 6, 2);
-
-		if (Gdx.input.isKeyPressed(Input.Keys.Z))
-			((OrthographicCamera) main.viewport.getCamera()).zoom += 0.01f;
-
+		if(Constants.gameState==GameState.Running){
+			main.batch.setProjectionMatrix(main.viewport.getCamera().combined);
+			main.viewport.apply();
+	
+			main.batch.begin();
+	
+			for (EntitySystem system : main.engine.getSystems())
+				if (system.checkProcessing())
+					if (!(system instanceof DamageSpriteSystem)
+							&& !(system instanceof SpriteRenderingAfterLightSystem)
+							&& !(system instanceof ParticleRenderingSystem))
+						system.update(delta);
+	
+			main.batch.end();
+	
+			lightsManager.handler
+					.setCombinedMatrix((OrthographicCamera) main.viewport
+							.getCamera());
+			lightsManager.handler.setAmbientLight(lightsManager.ambientLight);
+			lightsManager.handler.updateAndRender();
+	
+			hud.render();
+	
+			main.batch.begin();
+			main.engine.getSystem(ParticleRenderingSystem.class).update(delta);
+			main.engine.getSystem(SpriteRenderingAfterLightSystem.class).update(
+					delta);
+	
+			main.engine.getSystem(DamageSpriteSystem.class).update(delta);
+	
+			main.batch.end();
+		//	b2drenderer.render(world, main.viewport.getCamera().combined);
+			world.step(1 / 60f, 6, 2);
+	
+			if (Gdx.input.isKeyPressed(Input.Keys.Z))
+				((OrthographicCamera) main.viewport.getCamera()).zoom += 0.01f;
+		}
+		
+		else if(Constants.gameState==GameState.GameOver){
+			main.setScreen(new MainScreen(main));
+			main.client.sendGameOverPacket();
+		}
+		
 	}
 
 	@Override

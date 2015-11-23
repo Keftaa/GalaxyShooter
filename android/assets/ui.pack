@@ -1,0 +1,114 @@
+
+ui.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+circle
+  rotate: false
+  xy: 1, 95
+  size: 160, 160
+  orig: 160, 160
+  offset: 0, 0
+  index: -1
+pad
+  rotate: false
+  xy: 163, 130
+  size: 125, 125
+  orig: 125, 125
+  offset: 0, 0
+  index: -1
+panel
+  rotate: false
+  xy: 290, 155
+  size: 100, 100
+  split: 9, 10, 8, 8
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+circle2
+  rotate: false
+  xy: 392, 158
+  size: 96, 97
+  orig: 96, 97
+  offset: 0, 0
+  index: -1
+back
+  rotate: false
+  xy: 1, 13
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+fire
+  rotate: false
+  xy: 83, 13
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+star
+  rotate: false
+  xy: 165, 48
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+button_clicked
+  rotate: false
+  xy: 165, 1
+  size: 49, 45
+  split: 7, 7, 6, 6
+  orig: 49, 45
+  offset: 0, 0
+  index: -1
+target
+  rotate: false
+  xy: 247, 48
+  size: 80, 80
+  orig: 80, 80
+  offset: 0, 0
+  index: -1
+grey_sliderVertical
+  rotate: false
+  xy: 490, 155
+  size: 4, 100
+  orig: 4, 100
+  offset: 0, 0
+  index: -1
+textbox
+  rotate: false
+  xy: 329, 104
+  size: 49, 49
+  split: 7, 6, 6, 10
+  orig: 49, 49
+  offset: 0, 0
+  index: -1
+button_unclicked
+  rotate: false
+  xy: 329, 53
+  size: 49, 49
+  split: 7, 5, 6, 7
+  orig: 49, 49
+  offset: 0, 0
+  index: -1
+pause
+  rotate: false
+  xy: 380, 105
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+checkmark
+  rotate: false
+  xy: 216, 26
+  size: 21, 20
+  orig: 21, 20
+  offset: 0, 0
+  index: -1
+cross
+  rotate: false
+  xy: 290, 135
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1

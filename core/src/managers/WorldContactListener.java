@@ -1,5 +1,7 @@
 package managers;
 
+import networking.MyClient;
+
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -19,6 +21,13 @@ public class WorldContactListener implements ContactListener {
 	private ComponentMapper<ContactDamageComponent> damageMapper = ComponentMapper
 			.getFor(ContactDamageComponent.class);
 
+	private ScoreManager scoreManager;
+	private HealthManager healthManager;
+	public WorldContactListener(ScoreManager scoreManager, HealthManager healthManager){
+		this.scoreManager = scoreManager;
+		this.healthManager = healthManager;
+	}
+	
 	@Override
 	public void beginContact(Contact contact) {
 		Fixture fixtureA = contact.getFixtureA();
@@ -26,11 +35,15 @@ public class WorldContactListener implements ContactListener {
 
 		Entity entityA = (Entity) fixtureA.getUserData();
 		Entity entityB = (Entity) fixtureB.getUserData();
+		Entity entityDamaged;
 		
 		
 		HealthComponent health = healthMapper.get(entityA);
-		if(health==null)
+		entityDamaged = entityA;
+		if(health==null){
 			health = healthMapper.get(entityB);
+			entityDamaged = entityB;
+		}
 
 		
 		ContactDamageComponent damage = damageMapper.get(entityA);
@@ -39,10 +52,13 @@ public class WorldContactListener implements ContactListener {
 
 		
 		if(health==null || damage==null) return;
+//		health.damageTaken += damage.damagePoints;
 		
-		health.damageTaken += damage.damagePoints;
+		healthManager.setDamage(entityDamaged, health.damageTaken+damage.damagePoints);
 		
-		System.out.println(health.damageTaken);
+		
+		
+		scoreManager.update();
 		
 	}
 

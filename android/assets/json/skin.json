@@ -1,0 +1,55 @@
+{
+	com.badlogic.gdx.graphics.Color: {
+        white: { r: 1, g: 1, b: 1, a: 1 },
+        red: { r: 1, g: 0, b: 0, a: 1 },
+        yellow: { r: 0.5, g: 0.5, b: 0, a: 1 },
+        black: { r: 0, g: 0, b: 0, a: 1 }
+    },
+    
+    com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+        drawable-black: { name: textbox, color: black }
+    }
+	
+	com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+		lblSmall: {
+			font: fontsmall,
+			fontColor: white 
+		},
+		
+		lblMedium: {
+			font: fontmedium,
+			fontColor: white
+		},
+		
+		lblBig: {
+			font: fontbig,
+			fontColor: white
+		},
+
+		lblHuge: {
+			font: fonthuge,
+			fontColor: white
+		}		
+	},
+	
+	com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+		txtField: {
+			font: fontmedium,
+			fontColor: white,
+			cursor: grey_sliderVertical,
+			selection: drawable-black,
+			background: textbox
+		}
+	},
+	
+	com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+		txtButton:{
+			up: button_unclicked,
+			down: button_clicked,
+			checked: button_clicked,
+			font: fontmedium
+		}
+
+	}
+}
+	

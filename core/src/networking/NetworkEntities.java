@@ -24,7 +24,7 @@ public class NetworkEntities {
 		oppLight = engine.createEntity();
 		PositionComponent position = engine.createComponent(PositionComponent.class);
 		position.x = 0;
-		position.y = 0;
+		position.y = Constants.WORLD_HEIGHT/2;
 
 		oppLight.add(position);
 		oppLight.add(engine.createComponent(RenderableComponent.class));
@@ -40,7 +40,6 @@ public class NetworkEntities {
 		oppLight.add(position);
 		
 		engine.addEntity(oppLight);
-		System.out.println(oppLight);
 	}
 	
 	public void loadAll(){

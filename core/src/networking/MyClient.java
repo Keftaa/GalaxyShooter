@@ -8,6 +8,8 @@ import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import managers.ScoreManager;
+
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
@@ -25,6 +27,7 @@ import com.esotericsoftware.kryonet.Listener;
 import com.galaxyshooter.game.Assets;
 import com.galaxyshooter.game.Constants;
 import com.galaxyshooter.game.Assets.GameSprite;
+import com.galaxyshooter.game.Constants.GameState;
 
 import components.BodyComponent;
 import components.BulletRateComponent;
@@ -50,25 +53,26 @@ public class MyClient {
 	private Client client;
 	private PooledEngine engine;
 	private Packet packet;
-	private InetAddress address;
 	private Assets assets;
 
 	private NetworkEntities nEntities;
-
-	public MyClient(PooledEngine engine, Assets assets, NetworkEntities nEntities) {
+	public int score;
+	public boolean connected;
+	public MyClient(String IP, PooledEngine engine, Assets assets, NetworkEntities nEntities) {
+		connected = false;
 		this.nEntities = nEntities;
 		this.engine = engine;
 		client = new Client();
 		this.assets = assets;
-		address = client.discoverHost(6000, 10000);
-		System.out.println(address);
 		packet = new Packet();
 		Kryo kryo = client.getKryo();
 		Kryos.registerAll(kryo);
 		client.start();
 		try {
-			client.connect(5000, address, 5000, 6000);
+			client.connect(5000, IP, 5000, 6000);
 			clientListener();
+			connected = true;
+			
 		} catch (IOException e) {
 			System.out.println("Could not connect to server");
 			e.printStackTrace();
@@ -101,7 +105,7 @@ public class MyClient {
 						
 						}
 					}
-					else{
+					else if(packet.name.equals("Bullet")){
 						Entity entity = engine.createEntity();
 						Array<Component> components = translatePacket((Packet) object);
 						for (Component c : components){
@@ -109,6 +113,15 @@ public class MyClient {
 						}
 						engine.addEntity(entity);
 
+					}
+					
+					else if(packet.name.equals("Score")){
+						score = packet.oppScore; // we're receiving it, so oppScore is actually our Score
+						
+					}
+					
+					else if(packet.name.equals("GameOver")){
+						Constants.gameState = GameState.GameOver;
 					}
 				}
 			}
@@ -126,7 +139,7 @@ public class MyClient {
 			}
 
 			packet.name = name;
-			client.sendUDP(packet);
+			client.sendTCP(packet);
 		}
 
 	}
@@ -315,8 +328,8 @@ public class MyClient {
 			else if (key.equals("RelativeSpeed")){
 				Object[] info = (Object[]) map.get(key);
 				RelativeSpeedComponent relSpeed = engine.createComponent(RelativeSpeedComponent.class);
-				relSpeed.groupId = (int) info[0];
-				relSpeed.leader = (boolean) info[1];
+				relSpeed.groupId = (Integer) info[0];
+				relSpeed.leader = (Boolean) info[1];
 				
 				components.add(relSpeed);
 			}
@@ -443,5 +456,19 @@ public class MyClient {
 
 		return components;
 	}
+	
+	
+	public void sendScore(int score){
+		Packet packet = new Packet();
+		packet.oppScore = score;
+		packet.name = "Score";
+		client.sendTCP(packet);
+	}
 
+	public void sendGameOverPacket() {
+		Packet packet = new Packet();
+		packet.name = "GameOver";
+		client.sendTCP(packet);
+		
+	}
 }

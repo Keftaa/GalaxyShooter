@@ -108,7 +108,9 @@ public class BodyGenerator implements EntityListener {
 	
 	
 	public void destroyBody(Entity owner){
-		world.destroyBody(owner.getComponent(BodyComponent.class).body);
+		if(!world.isLocked())
+			world.destroyBody(owner.getComponent(BodyComponent.class).body);
+		
 	}
 
 	@Override

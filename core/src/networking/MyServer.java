@@ -30,7 +30,6 @@ public class MyServer {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public void serverListener(){
@@ -51,7 +50,7 @@ public class MyServer {
 						float [] speedInfo = (float[]) packet.stuff.get("Speed");
 						speedInfo[1] = -speedInfo[1];
 						packet.stuff.put("Speed", speedInfo);
-						server.sendToAllExceptUDP(connection.getID(), packet);
+						server.sendToAllExceptTCP(connection.getID(), packet);
 						break;
 					case "Position":
 						float [] positionInfo = (float[]) packet.stuff.get("Position");
@@ -77,8 +76,15 @@ public class MyServer {
 						packet.stuff.remove("Sprite");
 						packet.stuff.remove("Light");
 						
-						server.sendToAllExceptUDP(connection.getID(), packet);
+						server.sendToAllExceptTCP(connection.getID(), packet);
 						break;
+						
+					case "Score":
+						server.sendToAllExceptTCP(connection.getID(), packet);
+						break;
+						
+					case "GameOver":
+						server.sendToAllExceptTCP(connection.getID(), packet);
 						
  					}
 

@@ -22,7 +22,7 @@ public class PositionSyncSystem extends IteratingSystem {
 	protected void processEntity(Entity entity, float deltaTime) {
 		BodyComponent body = bodyMapper.get(entity);
 		PositionComponent position = positionMapper.get(entity);
-		
+		if(body.body==null) return;
 		if(body.body.getPosition().x != position.x || body.body.getPosition().y != position.y){
 			if(position.overridenByBody){
 				position.x = body.body.getPosition().x;
